@@ -4,6 +4,6 @@
 // in der Datenbank sorgen dafür, dass nur freigeschaltete E-Mail-Adressen Daten sehen.
 // Niemals den "service_role"- oder "secret"-Schlüssel hier eintragen.
 window.GARTENMOND_CONFIG = {
-  url: "https://DEIN-PROJEKT.supabase.co",
+  url: "https://cltvezxixtuximswyfkt.supabase.co",
   key: "sb_publishable_jNXMhXybI2ehKlOWOYi9uw_vcSvLBCq"
 };
