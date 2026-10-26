@@ -407,7 +407,7 @@ function goodFor(m){
 }
 
 /* ---------- Pflanzenkatalog ---------- */
-const CATS=["Rosen","Sträucher","Hecken","Stauden","Gräser","Zwiebeln & Knollen","Kräuter","Obst","Kletterpflanzen","Kübelpflanzen","Rasen"];
+const CATS=["Rosen","Sträucher","Hecken","Stauden","Gräser","Zwiebeln & Knollen","Sommerblumen","Kübelpflanzen","Kletterpflanzen","Kräuter","Obst","Bäume","Rasen"];
 const P=(id,n,b,c,e,l,w,h,d,t)=>({id,n,b,c,e,l,w,h,d,t});
 const CATALOG=[
 P("edelrose","Edelrose / Beetrose","Rosa × hybrida","Rosen","B","Sonne",2,"winterhart, Veredelung schützen","Öfterblühend, braucht tiefgründigen, humosen Boden und einen luftigen Platz, damit das Laub schnell abtrocknet (beugt Sternrußtau vor). Nie dorthin pflanzen, wo zuvor Rosen standen.",[
@@ -638,6 +638,379 @@ P("rasen","Rasen","Poa / Lolium / Festuca","Rasen","L","Sonne",2,"winterhart","D
  ["aussaat","08-20","09-20","Kahle Stellen nachsäen, Saat 1 cm einrechen, 3 Wochen feucht halten."],
  ["duengen","09-15","10-20","Herbstdünger, kaliumbetont, stärkt gegen Frost und Pilze."],
  ["pflege","10-20","11-20","Letzter Schnitt auf 4–5 cm, Laub abrechen."]]),
+/* ---- Erweiterung: Sträucher ---- */
+P("weigelie","Weigelie","Weigela florida","Sträucher","B","Sonne",2,"voll winterhart","Blüht im Mai und Juni am Vorjahrestrieb, oft mit Nachblüte im Sommer. Wird ohne Schnitt nach einigen Jahren sparrig.",[
+ ["schnitt","06-10","07-10","Direkt nach der Blüte 2–3 der ältesten Triebe bodennah herausschneiden, abgeblühte Zweige bis zu einem kräftigen Seitentrieb einkürzen."],
+ ["duengen","03-20","04-30","Kompost um den Strauch verteilen."]]),
+P("spiere-fruehling","Frühlingsspiere / Brautspiere","Spiraea × arguta, S. × vanhouttei","Sträucher","B","Sonne",1,"voll winterhart","Weiße Blütenkaskaden im April und Mai am Vorjahrestrieb. Anspruchslos.",[
+ ["schnitt","05-15","06-15","Nach der Blüte alle 2–3 Jahre die ältesten Triebe bodennah entfernen. Nicht einkürzen, sonst geht die überhängende Form verloren."]]),
+P("spiere-sommer","Sommerspiere","Spiraea japonica","Sträucher","B","Sonne",1,"voll winterhart","Kompakter Kleinstrauch mit rosa Blütendolden im Sommer, blüht am neuen Holz.",[
+ ["schnitt","03-01","03-31","Kräftig auf 20–30 cm über dem Boden zurückschneiden, das hält ihn kompakt und blühfreudig."],
+ ["pflege","07-15","08-31","Verblühte Dolden abschneiden, oft folgt eine Nachblüte."]]),
+P("deutzie","Deutzie / Sternchenstrauch","Deutzia","Sträucher","B","Sonne",2,"voll winterhart","Weiße bis rosa Blütenrispen im Frühsommer am Vorjahrestrieb.",[
+ ["schnitt","06-15","07-15","Nach der Blüte auslichten: älteste Triebe bodennah entfernen, Verblühtes bis zu einem jungen Seitentrieb kürzen."]]),
+P("pfeifenstrauch","Pfeifenstrauch / Falscher Jasmin","Philadelphus coronarius","Sträucher","B","Sonne",2,"voll winterhart","Stark duftende weiße Blüten im Juni. Robust und schnell wachsend.",[
+ ["schnitt","06-20","07-20","Nach der Blüte ein Drittel der ältesten Triebe bodennah herausnehmen."],
+ ["duengen","03-20","04-30","Kompost oder organischer Volldünger."]]),
+P("kolkwitzie","Kolkwitzie / Perlmuttstrauch","Kolkwitzia amabilis","Sträucher","B","Sonne",1,"voll winterhart","Überhängender Strauch mit zartrosa Glöckchen im Mai und Juni.",[
+ ["schnitt","06-15","07-15","Nach der Blüte alle 2–3 Jahre alte Triebe bodennah entfernen, sonst verkahlt er."]]),
+P("zierquitte","Zierquitte","Chaenomeles","Sträucher","B","Sonne",1,"voll winterhart","Leuchtend rote oder orange Blüten vor dem Laub, im Herbst duftende Früchte (gekocht essbar).",[
+ ["schnitt","04-25","05-31","Nach der Blüte auslichten und zu lange Triebe einkürzen."],
+ ["ernte","09-20","10-31","Früchte für Gelee ernten, wenn sie gelb sind und duften."]]),
+P("schneeball","Gewöhnlicher Schneeball","Viburnum opulus 'Roseum'","Sträucher","B","Halbschatten",3,"voll winterhart","Ballförmige weiße Blüten im Mai. Wird gerne von Schwarzen Bohnenläusen und dem Schneeballblattkäfer befallen.",[
+ ["pflege","04-20","06-15","Triebspitzen auf Blattläuse und Lochfraß (Blattkäferlarven) kontrollieren, befallene Spitzen abschneiden."],
+ ["schnitt","06-01","06-30","Nach der Blüte nur auslichten, älteste Triebe bodennah."],
+ ["pflege","11-01","02-28","Im Winter Zweigspitzen auf Eigelege des Blattkäfers absuchen (kleine Narben in Reihen) und abschneiden."]]),
+P("duftschneeball","Winter-Duftschneeball","Viburnum × bodnantense","Sträucher","B","Halbschatten",2,"voll winterhart","Blüht duftend in milden Phasen von November bis März.",[
+ ["schnitt","04-01","04-30","Nach der Blüte nur alte Triebe bodennah entfernen, nicht einkürzen."]]),
+P("garteneibisch","Garteneibisch / Hibiskus","Hibiscus syriacus","Sträucher","B","Sonne",2,"winterhart, jung schützen","Blüht von Juli bis September am neuen Holz und treibt im Frühjahr spät aus. Erst ab Juni als tot einstufen.",[
+ ["schnitt","03-01","04-15","Vorjahrestriebe um ein Drittel einkürzen, schwache und nach innen wachsende Triebe entfernen."],
+ ["duengen","04-15","06-30","Blühpflanzendünger im Frühjahr und Frühsommer."],
+ ["schutz","11-01","11-30","Junge Pflanzen: Wurzelbereich mit Laub mulchen."]]),
+P("bartblume","Bartblume","Caryopteris × clandonensis","Sträucher","B","Sonne",1,"bedingt winterhart","Blaue Spätsommerblüte, Bienenmagnet. Mag es trocken und warm.",[
+ ["schnitt","03-20","04-20","Auf 10–20 cm über dem Boden zurückschneiden, sobald keine starken Fröste mehr drohen."],
+ ["schutz","11-15","12-15","Basis mit Laub oder Reisig abdecken."]]),
+P("blauraute","Blauraute / Perovskie","Salvia yangii (Perovskia)","Sträucher","B","Sonne",1,"winterhart","Silbriges Laub, lavendelblaue Rispen von Juli bis September. Für trockene, sonnige Plätze.",[
+ ["schnitt","04-01","04-30","Auf 20–30 cm zurückschneiden, wenn der Neuaustrieb sichtbar wird."]]),
+P("fingerstrauch","Fingerstrauch","Potentilla fruticosa","Sträucher","B","Sonne",1,"voll winterhart","Kleiner, sehr robuster Dauerblüher von Juni bis Oktober.",[
+ ["schnitt","03-01","04-15","Um ein Drittel einkürzen, alle paar Jahre einige alte Triebe bodennah entfernen."]]),
+P("zaubernuss","Zaubernuss","Hamamelis × intermedia","Sträucher","B","Halbschatten",2,"voll winterhart","Fadenförmige Winterblüten, oft duftend, prachtvolle Herbstfärbung. Wächst langsam und verträgt Schnitt schlecht.",[
+ ["schnitt","03-15","04-15","Nur bei Bedarf direkt nach der Blüte: störende Triebe entfernen. Wildtriebe unterhalb der Veredelung bodennah abreißen."],
+ ["pflege","06-01","08-31","Bei Trockenheit gießen und mulchen, flache Wurzeln."]]),
+P("felsenbirne","Felsenbirne","Amelanchier lamarckii","Sträucher","B","Sonne",1,"voll winterhart","Weiße Frühlingsblüte, essbare blauschwarze Beeren im Juni, leuchtend rote Herbstfärbung.",[
+ ["ernte","06-15","07-15","Beeren ernten, wenn sie dunkelblau sind. Vögel sind schnell."],
+ ["schnitt","07-15","08-31","Nur bei Bedarf auslichten, sie wächst von selbst in schöner Form."]]),
+P("kornelkirsche","Kornelkirsche","Cornus mas","Sträucher","B","Sonne",1,"voll winterhart","Heimischer Großstrauch mit gelber Blüte im März, essbare rote Früchte im Spätsommer. Wichtige frühe Bienenweide.",[
+ ["schnitt","04-01","04-30","Nach der Blüte nur auslichten, als Hecke auch Formschnitt im Juni."],
+ ["ernte","08-20","09-30","Früchte ernten, wenn sie dunkelrot sind und sich leicht lösen."]]),
+P("hartriegel","Roter Hartriegel","Cornus alba 'Sibirica'","Sträucher","L","Sonne",3,"voll winterhart","Leuchtend rote Rinde im Winter, die nur an jungen Trieben kräftig ist.",[
+ ["schnitt","03-01","03-31","Jedes Jahr ein Drittel der ältesten, dunkleren Triebe bodennah schneiden, damit viele rote Jungtriebe nachkommen."]]),
+P("berberitze","Berberitze","Berberis thunbergii","Sträucher","L","Sonne",1,"voll winterhart","Bedornter Kleinstrauch, oft mit rotem Laub. Gut als niedrige Hecke.",[
+ ["schnitt","06-15","07-15","Formschnitt nach dem Austrieb, Handschuhe tragen."],
+ ["schnitt","03-01","03-31","Alle paar Jahre alte Triebe bodennah entfernen."]]),
+P("feuerdorn","Feuerdorn","Pyracantha coccinea","Sträucher","F","Sonne",1,"winterhart","Immergrün, weiße Blüte im Mai, orange oder rote Beeren bis in den Winter. Gut an Wänden.",[
+ ["schnitt","06-01","06-30","Nach der Blüte überlange Triebe kürzen, dabei Fruchtansätze schonen."],
+ ["schnitt","08-15","09-10","Neue Triebe, die die Beeren verdecken, auf 2–3 Blätter einkürzen."]]),
+P("ranunkelstrauch","Ranunkelstrauch","Kerria japonica","Sträucher","B","Halbschatten",2,"voll winterhart","Goldgelbe Blüten im April und Mai, grüne Triebe auch im Winter. Bildet Ausläufer.",[
+ ["schnitt","05-15","06-15","Nach der Blüte abgeblühte Triebe bodennah entfernen, Ausläufer abstechen."]]),
+P("johanniskraut","Strauch-Johanniskraut","Hypericum 'Hidcote'","Sträucher","B","Sonne",1,"winterhart","Goldgelbe Schalenblüten von Juli bis Oktober am neuen Holz.",[
+ ["schnitt","03-01","03-31","Um die Hälfte zurückschneiden, erfrorene Spitzen entfernen."]]),
+P("skimmie","Skimmie","Skimmia japonica","Sträucher","B","Schatten",2,"winterhart","Immergrüner Zwergstrauch mit roten Knospen im Winter. Braucht sauren, feuchten Boden und keine Wintersonne.",[
+ ["duengen","04-01","05-15","Rhododendrondünger, mit Laub- oder Rindenmulch abdecken."],
+ ["schutz","12-01","02-28","Vor Wintersonne schützen, an frostfreien Tagen gießen."]]),
+P("glanzmispel","Glanzmispel 'Red Robin'","Photinia × fraseri","Hecken","L","Sonne",2,"bedingt winterhart","Immergrün mit leuchtend rotem Austrieb. Jeder Schnitt löst neuen roten Austrieb aus.",[
+ ["schnitt","05-25","06-20","Formschnitt nach dem ersten Austrieb."],
+ ["schnitt","08-01","08-31","Zweiter Schnitt für erneuten roten Austrieb, später nicht mehr."],
+ ["schutz","12-01","02-28","Vor Wintersonne und Ostwind schützen, an frostfreien Tagen gießen."]]),
+P("eibe","Eibe","Taxus baccata","Hecken","L","Schatten",2,"voll winterhart","Heimisch, sehr langlebig und als einziges Nadelgehölz auch aus altem Holz austriebsfähig. Alle Teile außer dem roten Samenmantel sind giftig.",[
+ ["schnitt","06-20","08-31","Formschnitt nach dem Austrieb, bei Bedarf auch kräftiger Verjüngungsschnitt."],
+ ["duengen","03-20","04-30","Kompost oder Koniferendünger."]]),
+P("magnolie","Tulpen-Magnolie","Magnolia × soulangeana","Sträucher","B","Sonne",2,"winterhart, Blüte spätfrostgefährdet","Große Blüten vor dem Laubaustrieb im April. Verträgt Schnitt schlecht, Wunden heilen langsam.",[
+ ["schnitt","06-15","07-31","Nur bei Bedarf einzelne störende Äste auf Astring entfernen, nie einkürzen."],
+ ["duengen","03-15","04-15","Etwas saurer Dünger oder Kompost, flache Wurzeln: nicht hacken."],
+ ["pflanzen","04-01","05-15","Im Frühjahr pflanzen, nicht im Herbst."]]),
+P("ginster","Edelginster","Cytisus scoparius","Sträucher","B","Sonne",1,"winterhart","Gelbe Blütenfülle im Mai auf mageren, sauren Böden. Kurzlebig und nicht ins alte Holz schneiden.",[
+ ["schnitt","06-01","06-30","Nach der Blüte die grünen Triebe um die Hälfte einkürzen (Samenhülsen weg). Nicht ins verholzte Holz."]]),
+P("schneeheide","Schneeheide","Erica carnea","Sträucher","B","Sonne",1,"voll winterhart","Blüht von Dezember bis April, verträgt als einzige Heide Kalk.",[
+ ["schnitt","04-01","04-30","Nach der Blüte die verblühten Triebe mit der Schere einkürzen."]]),
+P("besenheide","Besenheide","Calluna vulgaris","Sträucher","B","Sonne",2,"winterhart","Spätsommerblüher für sauren, sandigen Boden.",[
+ ["schnitt","03-15","04-15","Verblühte Triebe vom Vorjahr bis ins grüne Laub einkürzen, nicht ins Holz."],
+ ["schutz","12-01","02-28","Bei Kahlfrost mit Reisig vor Wintersonne schützen."]]),
+P("azalee","Japanische Azalee","Rhododendron obtusum-Hybriden","Sträucher","B","Halbschatten",3,"winterhart","Kompakt, im Mai über und über mit Blüten bedeckt. Braucht sauren, humosen, feuchten Boden.",[
+ ["pflege","05-25","06-25","Nach der Blüte leicht in Form schneiden oder Verblühtes auszupfen."],
+ ["duengen","03-20","04-30","Rhododendrondünger und Rindenmulch."],
+ ["schutz","12-01","02-28","Vor Wintersonne schützen, an frostfreien Tagen gießen."]]),
+P("zwergmispel","Teppich-Zwergmispel","Cotoneaster dammeri","Sträucher","L","Halbschatten",1,"voll winterhart","Immergrüner Bodendecker für Böschungen, rote Beeren im Herbst.",[
+ ["schnitt","03-01","04-15","Ränder einkürzen, verkahlte Stellen zurückschneiden."]]),
+P("strauchpfingstrose","Strauch-Pfingstrose","Paeonia × suffruticosa","Sträucher","B","Sonne",2,"winterhart","Verholzende Pfingstrose mit riesigen Blüten im Mai. Wird sehr alt und mag keinen Standortwechsel.",[
+ ["pflege","05-25","06-25","Verblühtes abschneiden, Samenstände entfernen."],
+ ["schnitt","03-01","03-31","Nur erfrorene oder tote Triebspitzen bis zur ersten gesunden Knospe entfernen."],
+ ["duengen","03-15","04-15","Kompost und etwas Kalk."]]),
+P("rambler","Ramblerrose (einmalblühend)","Rosa (Rambler)","Rosen","B","Sonne",2,"voll winterhart","Sehr wüchsig, klettert in Bäume und Pergolen. Blüht einmal im Juni am Vorjahrestrieb.",[
+ ["schnitt","07-20","08-31","Nach der Blüte nur auslichten: einige alte Triebe bodennah entfernen, junge Triebe anbinden. Kein Frühjahrsschnitt."],
+ ["duengen","03-25","04-30","Rosendünger oder Kompost."]]),
+P("kletterhortensie","Kletterhortensie","Hydrangea petiolaris","Kletterpflanzen","B","Schatten",2,"voll winterhart","Klettert mit Haftwurzeln an Wänden und Bäumen, auch auf der Nordseite. Braucht einige Jahre bis zur ersten Blüte.",[
+ ["schnitt","06-25","07-31","Nach der Blüte zu lange und abstehende Triebe einkürzen."],
+ ["duengen","04-01","05-15","Kompost oder Hortensiendünger."]]),
+P("geissblatt","Geißblatt","Lonicera × heckrottii u. a.","Kletterpflanzen","B","Halbschatten",2,"voll winterhart","Duftende Röhrenblüten, besonders abends. Wurzeln im Schatten, Triebe in der Sonne.",[
+ ["schnitt","03-01","03-31","Ausgeblühte und verkahlte Triebe einkürzen, alle paar Jahre alte Triebe bodennah herausnehmen."],
+ ["pflege","05-01","06-30","Auf Blattläuse kontrollieren, befallene Spitzen abschneiden."]]),
+P("wilderwein","Wilder Wein","Parthenocissus tricuspidata","Kletterpflanzen","L","Sonne",2,"voll winterhart","Selbstklimmer mit Haftscheiben, flammend rote Herbstfärbung. Sehr wüchsig.",[
+ ["schnitt","07-01","08-31","Von Fenstern, Dachrinnen und Ziegeln zurückschneiden."],
+ ["schnitt","02-01","03-15","Kräftiger Rückschnitt im Winter, falls er zu groß wird."]]),
+P("trompetenblume","Trompetenblume","Campsis radicans","Kletterpflanzen","B","Sonne",2,"winterhart, braucht Wärme","Orange Trompetenblüten im Hochsommer am neuen Holz. Braucht einen warmen, geschützten Platz.",[
+ ["schnitt","02-15","03-31","Alle Seitentriebe des Vorjahres auf 2–4 Augen zurückschneiden (Zapfenschnitt)."],
+ ["schutz","11-15","12-15","Junge Pflanzen am Fuß mit Laub schützen."]]),
+P("clematis2","Clematis (Gruppe 2, großblumig)","Clematis-Hybriden ('Nelly Moser', 'The President' u. a.)","Kletterpflanzen","B","Sonne",2,"voll winterhart","Erste Blüte im Mai und Juni am alten Holz, zweite Blüte im Spätsommer am neuen. Clematiswelke kann einzelne Triebe welken lassen.",[
+ ["schnitt","02-20","03-31","Nur leicht einkürzen: Triebspitzen bis zum ersten kräftigen Knospenpaar, totes Holz entfernen."],
+ ["schnitt","06-25","07-20","Nach der ersten Blüte Verblühtes mit einem Blattpaar abschneiden, fördert die Nachblüte."],
+ ["duengen","04-01","06-30","Organischer Dünger im April und Juni, Fuß mulchen."]]),
+
+/* ---- Erweiterung: Stauden ---- */
+P("phlox","Flammenblume / Hoher Phlox","Phlox paniculata","Stauden","B","Sonne",3,"voll winterhart","Duftende Blütendolden im Hochsommer. Anfällig für Mehltau, wenn er zu trocken und eng steht.",[
+ ["duengen","04-01","05-31","Kompost und organischer Volldünger, Starkzehrer."],
+ ["pflege","06-01","08-31","Bei Trockenheit durchdringend gießen, nie über das Laub. Mehltaubefallene Blätter entfernen."],
+ ["pflege","07-20","08-31","Verblühte Dolden abschneiden, oft folgt eine Nachblüte."],
+ ["schnitt","10-15","11-30","Bodennah zurückschneiden."],
+ ["teilen","03-15","04-30","Alle 4–5 Jahre teilen, nur die kräftigen Randstücke neu setzen."]]),
+P("margerite","Sommermargerite","Leucanthemum × superbum","Stauden","B","Sonne",2,"voll winterhart","Große weiße Blüten im Sommer. Kurzlebig, wenn sie nicht geteilt wird.",[
+ ["schnitt","07-15","08-10","Nach der Hauptblüte bodennah zurückschneiden, dann blüht sie im Herbst erneut."],
+ ["teilen","03-25","04-30","Alle 3 Jahre teilen."]]),
+P("frauenmantel","Frauenmantel","Alchemilla mollis","Stauden","L","Halbschatten",2,"voll winterhart","Samtiges Laub, an dem Tautropfen perlen, gelbgrüne Blütenwolken. Sät sich stark aus.",[
+ ["schnitt","07-01","07-31","Nach der Blüte bodennah abschneiden, bevor er sich aussät. Treibt frisch nach."]]),
+P("akelei","Akelei","Aquilegia","Stauden","B","Halbschatten",2,"voll winterhart","Zierliche Frühsommerblüten, kurzlebig, erhält sich durch Selbstaussaat.",[
+ ["pflege","06-15","07-15","Samenstände stehen lassen, wenn sie sich aussäen soll, sonst abschneiden."],
+ ["schnitt","07-15","08-15","Unschönes Laub bodennah abschneiden, es treibt frisch nach."]]),
+P("bartiris","Bart-Iris / Schwertlilie","Iris barbata","Stauden","B","Sonne",1,"voll winterhart","Prachtvolle Blüten im Mai und Juni. Das Rhizom muss oben in der Sonne liegen, nie mit Erde oder Mulch bedecken.",[
+ ["pflege","06-15","07-15","Verblühte Stiele bodennah abschneiden."],
+ ["teilen","07-15","08-31","Alle 3–4 Jahre: Horst ausgraben, junge Rhizomstücke abtrennen, Laub fächerförmig auf 15 cm kürzen, flach wieder einsetzen."],
+ ["duengen","03-15","04-15","Wenig, stickstoffarm. Etwas Kalium fördert die Blüte."]]),
+P("lupine","Lupine","Lupinus polyphyllus","Stauden","B","Sonne",2,"voll winterhart","Hohe bunte Blütenkerzen im Juni. Mag keinen Kalk, ist kurzlebig.",[
+ ["schnitt","06-25","07-20","Verblühte Kerzen vor der Samenbildung abschneiden, das bringt eine Nachblüte."],
+ ["pflege","04-15","06-15","Auf Lupinenläuse (grau, wachsig) und Schnecken kontrollieren."]]),
+P("schafgarbe","Schafgarbe","Achillea filipendulina / A. millefolium","Stauden","B","Sonne",1,"voll winterhart","Flache Blütenteller im Sommer, sehr trockenheitsverträglich und insektenfreundlich.",[
+ ["pflege","07-15","08-31","Verblühte Dolden abschneiden für Nachblüte."],
+ ["schnitt","03-01","03-31","Alte Stängel bodennah entfernen."],
+ ["teilen","03-25","04-30","Alle 3–4 Jahre teilen."]]),
+P("steppensalbei","Steppensalbei","Salvia nemorosa","Stauden","B","Sonne",1,"voll winterhart","Blauviolette Blütenkerzen ab Juni, Bienenweide. Mit Rückschnitt Blüte bis in den Herbst.",[
+ ["schnitt","06-25","07-20","Nach der ersten Blüte handbreit über dem Boden abschneiden, zweite Blüte im Spätsommer."],
+ ["schnitt","03-01","03-31","Alte Triebe bodennah schneiden."]]),
+P("maedchenauge","Mädchenauge","Coreopsis verticillata","Stauden","B","Sonne",1,"voll winterhart","Feines Laub, unzählige gelbe Sternblüten von Juni bis September.",[
+ ["pflege","07-15","08-15","Nach dem ersten Blütenflor mit der Heckenschere um ein Drittel einkürzen."],
+ ["schnitt","03-01","03-31","Bodennah zurückschneiden."]]),
+P("rudbeckie","Sonnenhut, gelb","Rudbeckia fulgida 'Goldsturm'","Stauden","B","Sonne",2,"voll winterhart","Goldgelbe Blüten mit dunkler Mitte von August bis Oktober.",[
+ ["schnitt","03-01","03-31","Samenstände über Winter stehen lassen, im März bodennah schneiden."],
+ ["teilen","03-25","04-30","Alle 4 Jahre teilen."]]),
+P("herbstaster","Herbstaster","Symphyotrichum novae-angliae / novi-belgii","Stauden","B","Sonne",2,"voll winterhart","Blütenwolken im September und Oktober, wichtige späte Insektennahrung. Glattblattastern neigen zu Mehltau.",[
+ ["pflege","05-20","06-10","Um ein Drittel einkürzen, dann wird sie standfester (optional)."],
+ ["pflege","07-01","09-15","Bei Trockenheit gießen, Mehltaubefall entfernen."],
+ ["schnitt","03-01","03-31","Stängel bodennah schneiden."],
+ ["teilen","04-01","04-30","Alle 3 Jahre teilen, sonst verkahlt die Mitte."]]),
+P("purpurgloeckchen","Purpurglöckchen","Heuchera","Stauden","L","Halbschatten",2,"winterhart","Farbiges Laub in Rot, Bernstein oder Silber. Friert sich im Winter gern aus dem Boden.",[
+ ["pflege","03-01","03-31","Hochgefrorene Pflanzen wieder andrücken, alte Blätter entfernen."],
+ ["teilen","04-01","04-30","Verkahlte, holzige Pflanzen teilen und tiefer setzen."]]),
+P("bergenie","Bergenie","Bergenia cordifolia","Stauden","L","Halbschatten",1,"voll winterhart","Große, ledrige, wintergrüne Blätter, rosa Blüten im April. Sehr robust.",[
+ ["pflege","03-01","03-31","Braune und zerfressene Blätter entfernen."],
+ ["teilen","08-15","09-15","Bei Bedarf teilen, Rhizomstücke flach einsetzen."]]),
+P("elfenblume","Elfenblume","Epimedium","Stauden","L","Schatten",1,"voll winterhart","Bodendecker für trockenen Schatten unter Gehölzen, zarte Blüten im April.",[
+ ["schnitt","02-15","03-15","Altes Laub bodennah abschneiden, bevor die Blüten erscheinen. So stehen sie frei."]]),
+P("traenendesherz","Tränendes Herz","Lamprocapnos spectabilis","Stauden","B","Halbschatten",2,"voll winterhart","Herzförmige Blüten im Mai. Zieht nach der Blüte im Sommer ein, das ist normal.",[
+ ["pflege","04-01","04-30","Austrieb bei Spätfrost mit Vlies schützen."],
+ ["pflege","07-01","07-31","Eingezogenes Laub entfernen, Lücke mit Sommerblumen füllen."],
+ ["teilen","09-15","10-15","Nur bei Bedarf teilen, sie mag Ruhe."]]),
+P("glockenblume","Glockenblume","Campanula persicifolia / C. portenschlagiana","Stauden","B","Halbschatten",2,"voll winterhart","Hohe und polsterbildende Arten, Blüte im Juni und Juli.",[
+ ["schnitt","07-15","08-10","Nach der Blüte zurückschneiden, oft folgt eine Nachblüte."],
+ ["pflege","04-01","06-15","Schnecken kontrollieren."]]),
+P("nelke","Federnelke / Pfingstnelke","Dianthus plumarius / D. gratianopolitanus","Stauden","B","Sonne",1,"winterhart","Duftende Blüten über blaugrünen Polstern. Will Sonne, Kalk und Trockenheit.",[
+ ["schnitt","07-01","07-31","Nach der Blüte Blütenstiele samt etwas Laub einkürzen, hält die Polster dicht."]]),
+P("ehrenpreis","Ähren-Ehrenpreis","Veronica spicata","Stauden","B","Sonne",1,"voll winterhart","Schlanke blaue Ähren im Sommer, gut für Bienen.",[
+ ["pflege","07-20","08-20","Verblühte Ähren abschneiden, oft Nachblüte."],
+ ["schnitt","03-01","03-31","Bodennah zurückschneiden."]]),
+P("fingerhut","Fingerhut","Digitalis purpurea","Stauden","B","Halbschatten",2,"winterhart, zweijährig","Blüht im zweiten Jahr im Juni und stirbt danach meist ab, sät sich aber aus. Stark giftig.",[
+ ["pflege","07-01","07-31","Samenstände für Aussaat stehen lassen oder abschneiden, wenn er sich nicht ausbreiten soll."],
+ ["aussaat","06-01","07-15","Direktsaat für das übernächste Jahr: Lichtkeimer, Samen nur andrücken."]]),
+P("stockrose","Stockrose","Alcea rosea","Stauden","B","Sonne",2,"winterhart, kurzlebig","Bis 2 m hohe Blütenstängel im Sommer. Malvenrost (orange Pusteln unter den Blättern) ist häufig.",[
+ ["pflege","05-15","08-31","Untere, rostige Blätter laufend entfernen und im Restmüll entsorgen."],
+ ["schnitt","09-01","09-30","Nach der Blüte abschneiden, das verlängert die Lebensdauer. Samen bei Bedarf vorher ernten."],
+ ["aussaat","06-01","07-31","Direktsaat für Blüte im nächsten Jahr."]]),
+P("astilbe","Prachtspiere","Astilbe","Stauden","B","Halbschatten",3,"voll winterhart","Federige Blütenrispen in Rosa, Rot und Weiß. Braucht konstant feuchten Boden.",[
+ ["pflege","06-01","08-31","Nie austrocknen lassen, mulchen."],
+ ["schnitt","03-01","03-31","Die dekorativen Samenstände bis zum Frühjahr stehen lassen, dann bodennah schneiden."],
+ ["teilen","03-25","04-30","Alle 3–4 Jahre teilen."]]),
+P("sterndolde","Sterndolde","Astrantia major","Stauden","B","Halbschatten",3,"voll winterhart","Filigrane Sternblüten im Frühsommer, lange haltbar in der Vase.",[
+ ["schnitt","07-01","07-31","Nach der Blüte zurückschneiden, oft Nachblüte."],
+ ["teilen","03-25","04-30","Bei Bedarf teilen."]]),
+P("indianernessel","Indianernessel","Monarda didyma","Stauden","B","Sonne",3,"voll winterhart","Aromatisches Laub, quirlige Blüten im Hochsommer. Mehltaugefährdet bei Trockenheit.",[
+ ["pflege","06-15","08-31","Gleichmäßig feucht halten, Mehltaublätter entfernen."],
+ ["schnitt","03-01","03-31","Bodennah zurückschneiden."],
+ ["teilen","04-01","04-30","Alle 3 Jahre teilen, die Mitte verkahlt."]]),
+P("sonnenbraut","Sonnenbraut","Helenium","Stauden","B","Sonne",3,"voll winterhart","Kupfer-, Rot- und Gelbtöne im Spätsommer.",[
+ ["pflege","05-20","06-10","Um ein Drittel einkürzen, macht sie standfest (optional)."],
+ ["schnitt","03-01","03-31","Bodennah zurückschneiden."],
+ ["teilen","04-01","04-30","Alle 3 Jahre teilen."]]),
+P("polsterphlox","Polsterphlox","Phlox subulata","Stauden","B","Sonne",1,"voll winterhart","Blütenteppiche im April und Mai für Steingarten und Mauerkronen.",[
+ ["schnitt","05-20","06-15","Nach der Blüte um ein Drittel einkürzen, hält die Polster dicht."]]),
+P("blaukissen","Blaukissen","Aubrieta","Stauden","B","Sonne",1,"voll winterhart","Violette Polster im Frühling, ideal für Mauern.",[
+ ["schnitt","05-15","06-15","Nach der Blüte kräftig einkürzen, sonst verkahlt es."]]),
+P("schleifenblume","Immergrüne Schleifenblume","Iberis sempervirens","Stauden","B","Sonne",1,"voll winterhart","Weiße Polster im April und Mai, wintergrün.",[
+ ["schnitt","05-25","06-20","Nach der Blüte um ein Drittel zurückschneiden."]]),
+P("farn","Wurmfarn","Dryopteris filix-mas","Stauden","L","Schatten",2,"voll winterhart","Robuster heimischer Farn für Schattenplätze.",[
+ ["schnitt","03-01","04-10","Alte Wedel bodennah abschneiden, bevor die neuen sich entrollen."]]),
+P("lavendelheide","Lavendelheide","Pieris japonica","Sträucher","B","Halbschatten",2,"winterhart","Immergrün mit roten Austrieben und Blütenrispen im Frühling. Saurer Boden nötig.",[
+ ["pflege","05-01","05-31","Verblühtes ausschneiden."],
+ ["schutz","12-01","02-28","Vor Wintersonne schützen."]]),
+P("blauschwingel","Blauschwingel","Festuca glauca","Gräser","L","Sonne",1,"voll winterhart","Kompakte blaue Horste für trockene, sonnige Plätze.",[
+ ["pflege","03-15","04-15","Abgestorbene Halme mit den Fingern auskämmen, nicht zurückschneiden."],
+ ["teilen","04-01","04-30","Alle 3 Jahre teilen, sonst verkahlt die Mitte."]]),
+P("federgras","Federgras / Engelshaar","Stipa tenuissima","Gräser","L","Sonne",1,"winterhart","Feine, im Wind wogende Halme. Kurzlebig, sät sich aus.",[
+ ["pflege","03-15","04-15","Alte Halme auskämmen, nicht zurückschneiden."]]),
+P("reitgras","Reitgras 'Karl Foerster'","Calamagrostis × acutiflora","Gräser","L","Sonne",2,"voll winterhart","Straff aufrecht, sehr früh im Austrieb, steht den ganzen Winter.",[
+ ["schnitt","02-15","03-15","Früher als andere Gräser auf 10–15 cm zurückschneiden, es treibt schon im März."]]),
+P("japanwaldgras","Japan-Waldgras","Hakonechloa macra","Gräser","L","Halbschatten",2,"winterhart","Überhängende, oft goldgelbe Halme, schön im Halbschatten und im Topf.",[
+ ["schnitt","03-15","04-15","Bodennah zurückschneiden."],
+ ["schutz","11-01","11-30","Im Topf frostgeschützt stellen."]]),
+
+/* ---- Erweiterung: Zwiebeln & Knollen ---- */
+P("schneegloeckchen","Schneeglöckchen","Galanthus nivalis","Zwiebeln & Knollen","W","Halbschatten",2,"voll winterhart","Erste Blüte des Jahres, verwildert unter Gehölzen. Lässt sich am besten im grünen Zustand teilen.",[
+ ["teilen","03-01","04-10","Direkt nach der Blüte mit Laub teilen und sofort wieder einsetzen (gelingt besser als trockene Zwiebeln)."],
+ ["pflanzen","09-15","10-31","Trockene Zwiebeln 5–8 cm tief setzen, möglichst früh im Herbst."]]),
+P("traubenhyazinthe","Traubenhyazinthe","Muscari armeniacum","Zwiebeln & Knollen","W","Sonne",1,"voll winterhart","Blaue Blütentrauben im April, verwildert leicht.",[
+ ["pflanzen","09-01","10-31","5–8 cm tief in Gruppen setzen."],
+ ["teilen","06-15","07-31","Zu dichte Horste nach dem Einziehen teilen."]]),
+P("hyazinthe","Hyazinthe","Hyacinthus orientalis","Zwiebeln & Knollen","W","Sonne",1,"winterhart","Stark duftend im April. Blütenstand wird in den Folgejahren lockerer.",[
+ ["pflanzen","09-15","11-10","15 cm tief setzen, Handschuhe tragen (Zwiebel reizt die Haut)."],
+ ["pflege","04-25","06-10","Verblühtes abschneiden, Laub einziehen lassen."]]),
+P("lilie","Gartenlilie","Lilium (Asiatische und Orientalische Hybriden)","Zwiebeln & Knollen","B","Sonne",2,"winterhart","Kopf in der Sonne, Fuß im Schatten. Rote Lilienhähnchen fressen Blätter und Knospen.",[
+ ["pflanzen","03-15","04-30","Zwiebeln 15–20 cm tief in durchlässigen Boden setzen, bei Lehm Sand unterlegen."],
+ ["pflege","04-15","07-15","Lilienhähnchen (leuchtend rote Käfer) und ihre Larven täglich absammeln."],
+ ["duengen","04-15","06-15","Kaliumbetonter Blühdünger."],
+ ["pflege","08-01","09-15","Verblühtes abschneiden, Stängel stehen lassen, bis er gelb ist."]]),
+P("kaiserkrone","Kaiserkrone","Fritillaria imperialis","Zwiebeln & Knollen","W","Sonne",1,"winterhart","Imposante Blütenkrone im April. Der Geruch soll Wühlmäuse vertreiben.",[
+ ["pflanzen","08-15","09-30","20 cm tief und leicht schräg setzen, damit kein Wasser in der Zwiebelmitte steht. Sand unterlegen."],
+ ["pflege","05-01","06-30","Verblühtes abschneiden, Laub einziehen lassen."]]),
+P("gladiole","Gladiole","Gladiolus","Zwiebeln & Knollen","B","Sonne",2,"nicht winterhart","Hohe Blütenähren im Sommer. Knollen werden frostfrei überwintert.",[
+ ["auspflanzen","04-20","05-31","Knollen 10–15 cm tief setzen, gestaffelt alle 2 Wochen für lange Blütezeit."],
+ ["schutz","10-01","10-31","Wenn das Laub gelb wird, Knollen ausgraben, Laub abschneiden, trocknen und kühl und trocken lagern."]]),
+P("canna","Blumenrohr","Canna indica","Zwiebeln & Knollen","B","Sonne",3,"nicht winterhart","Tropisch wirkend mit großen Blättern und leuchtenden Blüten. Starkzehrer.",[
+ ["auspflanzen","05-15","06-05","Nach den Eisheiligen auspflanzen, im März im Haus vortreiben ist möglich."],
+ ["duengen","06-01","08-31","Alle 2 Wochen Flüssigdünger, viel gießen."],
+ ["schutz","10-15","11-10","Nach dem ersten leichten Frost Stängel auf 15 cm kürzen, Rhizome ausgraben, in trockener Erde frostfrei lagern."]]),
+P("schneestolz","Schneestolz","Scilla luciliae (Chionodoxa)","Zwiebeln & Knollen","W","Sonne",1,"voll winterhart","Sternblüten in Blau im März, verwildert gut im Rasen und unter Gehölzen.",[
+ ["pflanzen","09-01","10-31","5–8 cm tief in Gruppen setzen."]]),
+
+/* ---- Erweiterung: Sommerblumen ---- */
+P("zinnie","Zinnie","Zinnia elegans","Sommerblumen","B","Sonne",2,"einjährig","Leuchtende Schnittblumen von Juli bis Frost. Je mehr geschnitten wird, desto mehr blüht.",[
+ ["aussaat","05-15","06-10","Nach den Eisheiligen direkt ins Beet säen, 1 cm tief, später auf 25 cm vereinzeln."],
+ ["pflege","07-01","10-15","Laufend Blüten schneiden oder Verblühtes entfernen."]]),
+P("kosmee","Schmuckkörbchen / Kosmee","Cosmos bipinnatus","Sommerblumen","B","Sonne",1,"einjährig","Luftige Blüten bis zum Frost, mager halten, sonst nur Laub.",[
+ ["aussaat","05-10","06-05","Direkt ins Beet säen, kaum düngen."],
+ ["pflege","07-15","10-15","Verblühtes abschneiden."]]),
+P("sonnenblume","Sonnenblume","Helianthus annuus","Sommerblumen","F","Sonne",2,"einjährig","Einjährig, Vogelfutter im Herbst. Junge Pflanzen vor Schnecken schützen.",[
+ ["aussaat","04-25","05-31","2–3 cm tief direkt säen, 40 cm Abstand."],
+ ["pflege","05-15","06-30","Junge Pflanzen vor Schnecken schützen, hohe Sorten anbinden."]]),
+P("ringelblume","Ringelblume","Calendula officinalis","Sommerblumen","B","Sonne",1,"einjährig","Unkomplizierte Heil- und Gartenpflanze, sät sich selbst aus.",[
+ ["aussaat","03-25","05-15","Direkt ins Beet säen."],
+ ["pflege","06-15","09-30","Verblühtes abschneiden, Blüten für Salbe ernten."]]),
+P("kapuzinerkresse","Kapuzinerkresse","Tropaeolum majus","Sommerblumen","B","Sonne",2,"einjährig","Rankt oder kriecht, Blüten und Blätter sind essbar. Lockt Blattläuse weg von anderen Pflanzen.",[
+ ["aussaat","05-10","06-05","2 cm tief direkt säen, nicht düngen."],
+ ["ernte","06-15","10-15","Blüten und junge Blätter für Salat ernten."]]),
+P("tagetes","Studentenblume","Tagetes patula","Sommerblumen","B","Sonne",2,"einjährig","Robuster Dauerblüher, wirkt gegen Nematoden im Boden. Schnecken mögen sie sehr.",[
+ ["auspflanzen","05-15","06-10","Nach den Eisheiligen pflanzen."],
+ ["pflege","06-15","10-01","Verblühtes auszupfen."]]),
+P("fleissigeslieschen","Fleißiges Lieschen","Impatiens walleriana","Sommerblumen","B","Schatten",3,"einjährig","Dauerblüher für Schattenkästen und -beete.",[
+ ["auspflanzen","05-15","06-10","Nach den Eisheiligen in den Schatten pflanzen."],
+ ["duengen","06-01","09-15","Alle 2 Wochen Flüssigdünger."]]),
+P("begonie","Eisbegonie / Knollenbegonie","Begonia","Sommerblumen","B","Halbschatten",2,"nicht winterhart","Blüht bis zum Frost im Halbschatten. Knollenbegonien lassen sich überwintern.",[
+ ["auspflanzen","05-15","06-10","Nach den Eisheiligen pflanzen."],
+ ["duengen","06-01","09-15","Alle 2 Wochen Blühdünger."],
+ ["schutz","10-01","10-20","Knollenbegonien vor Frost ausgraben, trocknen und bei 8–10 °C in trockenem Torfersatz lagern."]]),
+P("verbene","Verbene","Verbena-Hybriden / Verbena bonariensis","Sommerblumen","B","Sonne",1,"einjährig","Hängend für Kästen oder als hohe Patagonische Verbene im Beet, Schmetterlingsmagnet.",[
+ ["auspflanzen","05-15","06-10","Nach den Eisheiligen pflanzen."],
+ ["pflege","07-01","09-30","Verblühtes regelmäßig entfernen."]]),
+P("loewenmaeulchen","Löwenmäulchen","Antirrhinum majus","Sommerblumen","B","Sonne",2,"einjährig","Bunte Blütenkerzen, vertragen leichten Frost.",[
+ ["auspflanzen","04-25","05-31","Vorgezogene Pflanzen setzen, leichte Fröste machen ihnen wenig."],
+ ["schnitt","07-15","08-10","Nach der ersten Blüte um ein Drittel einkürzen, dann zweite Blüte."]]),
+
+/* ---- Erweiterung: Kübelpflanzen ---- */
+P("fuchsie","Fuchsie","Fuchsia-Hybriden","Kübelpflanzen","B","Halbschatten",3,"nicht winterhart (außer Freilandfuchsien)","Hängende Blüten von Mai bis Frost, ideal im Halbschatten.",[
+ ["auspflanzen","05-15","06-05","Nach den Eisheiligen ins Freie."],
+ ["duengen","05-20","08-31","Wöchentlich Flüssigdünger."],
+ ["schutz","10-10","10-31","Vor Frost einräumen, um die Hälfte zurückschneiden, hell und kühl (5–10 °C) oder dunkel bei 5 °C überwintern."]]),
+P("engelstrompete","Engelstrompete","Brugmansia","Kübelpflanzen","B","Sonne",3,"nicht winterhart","Riesige duftende Trompetenblüten. Stark giftig. Großer Wasser- und Nährstoffbedarf.",[
+ ["auspflanzen","05-15","06-05","Nach den Eisheiligen ins Freie, windgeschützt."],
+ ["duengen","05-20","08-31","Zweimal pro Woche düngen, im Sommer täglich gießen."],
+ ["schutz","10-10","10-31","Vor Frost auf 50–80 cm über der Gabelung zurückschneiden und hell bei 8–12 °C oder dunkel bei 5 °C überwintern."]]),
+P("agapanthus","Schmucklilie / Agapanthus","Agapanthus","Kübelpflanzen","B","Sonne",2,"bedingt winterhart","Blaue Blütenbälle im Sommer. Blüht am besten, wenn der Topf eng ist.",[
+ ["auspflanzen","04-20","05-20","Ab Ende April ins Freie, bei Spätfrost schützen."],
+ ["duengen","05-01","07-31","Alle 2 Wochen Kübelpflanzendünger, ab August nicht mehr."],
+ ["schutz","10-20","11-15","Hell und kühl (5–10 °C) überwintern, kaum gießen. Laubabwerfende Sorten auch dunkel."]]),
+P("margeritenstamm","Strauchmargerite","Argyranthemum frutescens","Kübelpflanzen","B","Sonne",3,"nicht winterhart","Weißer oder rosa Dauerblüher im Kübel, oft als Stämmchen.",[
+ ["auspflanzen","05-01","05-31","Ab Mai ins Freie, verträgt leichten Frost kurz."],
+ ["duengen","05-15","08-31","Wöchentlich Flüssigdünger, viel gießen."],
+ ["schnitt","07-15","08-10","Nach dem ersten Blütenflor um ein Drittel einkürzen."],
+ ["schutz","10-10","10-31","Hell bei 5–10 °C überwintern."]]),
+P("wandelroeschen","Wandelröschen","Lantana camara","Kübelpflanzen","B","Sonne",2,"nicht winterhart","Blüten wechseln die Farbe beim Aufblühen. Giftig.",[
+ ["schnitt","03-01","03-31","Vor dem Ausräumen um die Hälfte zurückschneiden."],
+ ["duengen","05-15","08-31","Wöchentlich Flüssigdünger."],
+ ["schutz","10-05","10-31","Hell bei 8–12 °C überwintern."]]),
+P("zitrone","Zitronenbäumchen","Citrus limon","Kübelpflanzen","F","Sonne",2,"nicht winterhart","Blüht und fruchtet gleichzeitig. Mag kalkarmes Wasser und gleichmäßige Feuchte.",[
+ ["auspflanzen","05-01","05-31","Ab Mai ins Freie, langsam an die Sonne gewöhnen."],
+ ["duengen","04-01","09-30","Wöchentlich Zitrusdünger."],
+ ["schnitt","03-01","03-31","Vor dem Austrieb leicht auslichten."],
+ ["schutz","10-10","11-05","Bei unter 5 °C einräumen, hell bei 5–12 °C überwintern."]]),
+P("hortensie-topf","Hortensie im Kübel","Hydrangea macrophylla (Topf)","Kübelpflanzen","B","Halbschatten",3,"im Topf frostempfindlich","Wie die Bauernhortensie, im Topf aber stärker frostgefährdet und durstiger.",[
+ ["duengen","04-01","07-31","Alle 2 Wochen Hortensiendünger."],
+ ["pflege","05-15","09-15","Täglich gießen, nie austrocknen lassen."],
+ ["schutz","11-01","11-30","Kübel einpacken und geschützt stellen oder hell und frostfrei bei 2–8 °C überwintern."]]),
+P("buchskugel-topf","Buchs- oder Ilexkugel im Topf","Buxus / Ilex crenata","Kübelpflanzen","L","Halbschatten",2,"winterhart, Topf schützen","Klassische Form im Topf. Ilex crenata ist die zünslerfreie Alternative zu Buchs.",[
+ ["schnitt","05-25","06-25","Formschnitt bei bedecktem Himmel."],
+ ["duengen","04-01","05-15","Langzeitdünger."],
+ ["schutz","12-01","02-28","Topf einpacken, an frostfreien Tagen gießen."]]),
+
+/* ---- Erweiterung: Kräuter ---- */
+P("oregano","Oregano","Origanum vulgare","Kräuter","L","Sonne",1,"voll winterhart","Würzkraut und Bienenweide, mag es trocken und mager.",[
+ ["ernte","06-01","08-31","Kurz vor oder während der Blüte ernten, dann ist das Aroma am stärksten."],
+ ["schnitt","03-15","04-15","Alte Triebe bodennah abschneiden."]]),
+P("zitronenmelisse","Zitronenmelisse","Melissa officinalis","Kräuter","L","Halbschatten",2,"voll winterhart","Erfrischendes Aroma, sät sich stark aus.",[
+ ["ernte","05-01","06-30","Vor der Blüte ernten."],
+ ["schnitt","06-25","07-15","Kräftig zurückschneiden, bevor sie blüht und sich aussät. Treibt frisch nach."]]),
+P("basilikum","Basilikum","Ocimum basilicum","Kräuter","L","Sonne",2,"einjährig, kälteempfindlich","Braucht Wärme. Unter 10 °C leidet er.",[
+ ["auspflanzen","05-20","06-15","Erst bei warmen Nächten ins Freie."],
+ ["ernte","06-15","09-15","Immer ganze Triebspitzen über einem Blattpaar abschneiden, nicht einzelne Blätter."]]),
+P("liebstoeckel","Liebstöckel","Levisticum officinale","Kräuter","L","Halbschatten",2,"voll winterhart","Maggikraut, wird groß. Eine Pflanze reicht.",[
+ ["ernte","05-01","08-31","Junge Blätter laufend ernten."],
+ ["schnitt","06-25","07-15","Blütenstängel abschneiden, damit die Blätter zart bleiben."]]),
+P("petersilie","Petersilie","Petroselinum crispum","Kräuter","L","Halbschatten",3,"zweijährig","Keimt langsam (3–4 Wochen). Nicht nach sich selbst oder anderen Doldenblütlern säen.",[
+ ["aussaat","04-01","05-31","Direkt säen, bis zur Keimung feucht halten."],
+ ["ernte","06-01","11-15","Äußere Stängel bodennah ernten, Herz stehen lassen."]]),
+
+/* ---- Erweiterung: Obst ---- */
+P("birnbaum","Birnbaum","Pyrus communis","Obst","F","Sonne",2,"voll winterhart","Wächst steiler als der Apfel. Gitterrost (orange Flecken) kommt von Wacholder in der Nähe.",[
+ ["schnitt","01-15","03-15","Winterschnitt an frostfreien Tagen: steile Triebe flacher binden oder entfernen, Krone auslichten."],
+ ["schnitt","07-15","08-15","Sommerschnitt: Wasserschosse entfernen."],
+ ["ernte","08-15","10-15","Pflücken, wenn sich die Frucht leicht vom Zweig löst. Lagerbirnen nachreifen lassen."],
+ ["duengen","03-15","04-30","Kompost auf die Baumscheibe."]]),
+P("heidelbeere","Kulturheidelbeere","Vaccinium corymbosum","Obst","F","Sonne",3,"voll winterhart","Braucht sauren Boden (pH 4–5), am besten im Hochbeet oder Kübel mit Moorbeeterde. Mit Regenwasser gießen.",[
+ ["duengen","04-01","05-31","Rhododendron- oder Heidelbeerdünger, nie Kalk oder Kompost."],
+ ["ernte","07-01","08-31","Mehrmals durchpflücken, nur vollständig blaue Beeren."],
+ ["schnitt","02-15","03-31","Älteste, vergreiste Triebe bodennah entfernen, ab dem 4. Standjahr."]]),
+P("stachelbeere","Stachelbeere","Ribes uva-crispa","Obst","F","Sonne",2,"voll winterhart","Mehltauresistente Sorten wählen. Trägt am 1- bis 3-jährigen Holz.",[
+ ["ernte","06-20","07-31","Für Kuchen grün, zum Naschen vollreif ernten."],
+ ["schnitt","07-20","08-31","Nach der Ernte alte Triebe bodennah entfernen, Strauch luftig halten."],
+ ["duengen","03-15","04-15","Beerendünger, Mulch."]]),
+P("brombeere","Brombeere","Rubus fruticosus (Kultursorten)","Obst","F","Sonne",2,"winterhart","Trägt an den Ruten des Vorjahres. Dornenlose Sorten sind angenehmer.",[
+ ["ernte","07-20","09-30","Beeren ernten, wenn sie tiefschwarz sind und sich leicht lösen."],
+ ["schnitt","09-15","10-31","Abgetragene Ruten bodennah abschneiden, 6–8 neue Ruten am Gerüst anbinden."],
+ ["duengen","03-15","04-30","Beerendünger und Mulch."]]),
+P("feige","Feige","Ficus carica","Obst","F","Sonne",2,"bedingt winterhart","An warmer Hauswand im Rheintal möglich, im Kübel sicherer. Robuste Sorten wie 'Brown Turkey'.",[
+ ["schnitt","03-15","04-15","Erfrorene Triebe entfernen, Krone auslichten."],
+ ["ernte","08-15","10-15","Ernten, wenn die Frucht weich ist und am Stiel leicht hängt."],
+ ["schutz","11-01","11-30","Im Beet mit Vlies und Laub am Fuß schützen, Kübel kühl und frostfrei einräumen."]]),
+P("rhabarber","Rhabarber","Rheum rhabarbarum","Obst","L","Sonne",3,"voll winterhart","Starkzehrer. Nach Johanni (24. Juni) nicht mehr ernten, damit er sich erholt.",[
+ ["ernte","04-15","06-24","Stiele herausdrehen, nicht abschneiden. Höchstens ein Drittel der Stiele auf einmal."],
+ ["pflege","05-01","06-30","Blütenstängel früh ausbrechen."],
+ ["duengen","07-01","07-31","Nach der Ernte kräftig mit Kompost oder Mist versorgen."],
+ ["teilen","10-01","11-15","Alle 8–10 Jahre teilen und an neuen Platz setzen."]]),
+P("weinrebe","Weinrebe (Tafeltraube)","Vitis vinifera","Obst","F","Sonne",2,"winterhart","Pilzwiderstandsfähige Sorten (PIWI) brauchen kaum Pflanzenschutz.",[
+ ["schnitt","01-15","03-15","Winterschnitt: Fruchtruten auf 2 Augen (Zapfen) oder 6–8 Augen (Strecker) kürzen."],
+ ["schnitt","06-01","07-31","Sommerschnitt: Geiztriebe ausbrechen, Triebe 2–3 Blätter nach der letzten Traube einkürzen."],
+ ["ernte","09-01","10-15","Ernten, wenn die Kerne braun sind und die Beeren süß."]]),
+
+/* ---- Erweiterung: Bäume ---- */
+P("zierkirsche","Japanische Zierkirsche","Prunus serrulata","Bäume","B","Sonne",2,"voll winterhart","Üppige Blüte im April. Schnittwunden heilen im Sommer am besten.",[
+ ["schnitt","07-01","08-15","Nur bei Bedarf nach der Blüte im Sommer auslichten."],
+ ["duengen","03-15","04-15","Kompost auf die Baumscheibe."]]),
+P("zierapfel","Zierapfel","Malus (Zierformen)","Bäume","B","Sonne",2,"voll winterhart","Blüte im Mai, kleine Äpfel als Vogelfutter bis in den Winter.",[
+ ["schnitt","01-15","03-15","Bei Bedarf Krone auslichten, Wasserschosse entfernen."],
+ ["duengen","03-15","04-15","Kompost auf die Baumscheibe."]]),
+P("kugelahorn","Kugelahorn","Acer platanoides 'Globosum'","Bäume","L","Sonne",2,"voll winterhart","Bleibt kompakt rund, gut für kleine Gärten.",[
+ ["schnitt","08-01","09-15","Bei Bedarf im Spätsommer einkürzen. Im Frühjahr blutet er stark."]]),
+P("kugelrobinie","Kugelrobinie","Robinia pseudoacacia 'Umbraculifera'","Bäume","L","Sonne",1,"voll winterhart","Hitzeverträglicher Kugelbaum. Holz ist bruchgefährdet, alle paar Jahre einkürzen.",[
+ ["schnitt","02-01","03-15","Alle 3–5 Jahre die Krone kräftig einkürzen (Kopfschnitt), sie bleibt sonst nicht rund."]]),
+P("holunder","Holunder","Sambucus nigra","Sträucher","F","Halbschatten",2,"voll winterhart","Heimischer Großstrauch, Blüten für Sirup, Beeren gekocht für Gelee (roh giftig).",[
+ ["ernte","05-25","06-25","Blütendolden an sonnigen Vormittagen ernten."],
+ ["ernte","08-20","09-30","Beerendolden ernten, wenn alle Beeren schwarz sind."],
+ ["schnitt","01-15","03-15","Alte Triebe bodennah entfernen, junge kräftige Triebe stehen lassen."]])
 ];
 const CAT=Object.fromEntries(CATALOG.map(c=>[c.id,c]));
 
@@ -656,6 +1029,8 @@ function glyph(cat,size=28){
     "Obst":`<circle cx="16" cy="19" r="8" fill="var(--el-F)" opacity=".85"/><path d="M16 11V6M16 9c2-3 5-3.5 7-3-1 3-4 4-7 3Z" ${a}/>`,
     "Kletterpflanzen":`<path d="M16 29c0-5 6-6 6-11s-6-5-6-10 4-5 4-5" ${a}/><path d="M19 22c2.5 0 4.5 1 5 3-2.5.5-4.5-.5-5-3Zm-3-9c-2.5 0-4.5 1-5 3 2.5.5 4.5-.5 5-3Z" ${sf} ${a}/><circle cx="21" cy="11" r="2" ${bl}/>`,
     "Kübelpflanzen":`<path d="M9 19h14l-2 10H11l-2-10Z" ${sf} ${a}/><path d="M16 19V11M16 13c-3 0-5-2-5.5-4.5 3 0 5 2 5.5 4.5Zm0-2c2.5 0 4.5-1.8 5-4-2.7 0-4.5 1.8-5 4Z" ${a}/><circle cx="16" cy="7" r="2.3" ${bl}/>`,
+    "Sommerblumen":`<path d="M16 29V17M16 24c-3 0-5-1.5-6-4 3 0 5 1.5 6 4Z" ${a}/><g ${bl}><ellipse cx="16" cy="6.5" rx="2.6" ry="4"/><ellipse cx="16" cy="17.5" rx="2.6" ry="4" opacity=".55"/><ellipse cx="10.5" cy="12" rx="4" ry="2.6"/><ellipse cx="21.5" cy="12" rx="4" ry="2.6"/></g><circle cx="16" cy="12" r="2.8" fill="var(--el-F)"/>`,
+    "Bäume":`<circle cx="16" cy="12" r="8.5" ${sf} ${a}/><path d="M16 29V17M16 21l-3.5-3.5M16 19l3-3" ${a}/><circle cx="12.5" cy="10" r="1.3" ${bl}/><circle cx="19" cy="8.5" r="1.3" ${bl}/><circle cx="18" cy="14" r="1.3" ${bl}/>`,
     "Rasen":`<path d="M4 27h24" ${a}/><path d="M6 27l1-7 1 7M10 27l1.5-9 1.5 9M15 27l1-6 1 6M19 27l1.5-8 1.5 8M24 27l1-6 1 6" ${a}/>`,
   }[cat]||"";
   return `<svg width="${s}" height="${s}" viewBox="0 0 32 32" aria-hidden="true">${g}</svg>`;
@@ -761,7 +1136,7 @@ function buildPlan(){
     c.t.forEach(task=>{
       const [type,f,,txt]=task;
       if(type==="pflanzen"&&!planned) return;
-      if(planned&&!["pflanzen","auspflanzen"].includes(type)) return;
+      if(planned&&!["pflanzen","auspflanzen","aussaat"].includes(type)) return;
       if(UI.typeF!=="all"&&groupOf(type)!==UI.typeF) return;
       for(const w of windowsFor(task,rs,re)){
         const s=w.from>rs?w.from:rs, e=w.to<re?w.to:re;
