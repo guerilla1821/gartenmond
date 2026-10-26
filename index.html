@@ -79,6 +79,7 @@ body.gated .bottomnav,body.gated .topnav{display:none!important}
 .gate{max-width:440px;margin:6vh auto 0;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px 24px;display:flex;flex-direction:column;gap:12px}
 .gate h2{font-size:30px;line-height:1.1}
 .gate p{margin:0}
+.gate input{font-size:16px}
 .gate-moon{width:84px;height:84px;position:relative;margin-bottom:4px}
 .gate-moon::before{content:"";position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle, color-mix(in oklab, var(--moon-lit) 45%, transparent), transparent 68%)}
 .gate-moon svg{position:relative}
@@ -91,7 +92,7 @@ code{font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5
   radial-gradient(120% 90% at 88% 10%, color-mix(in oklab, var(--moon-lit) 26%, transparent) 0%, transparent 55%),
   linear-gradient(160deg, var(--accent-soft), var(--surface) 70%);
   border:1px solid var(--line);padding:22px 22px 18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
-.hero .sprig{position:absolute;left:-18px;bottom:-26px;width:170px;opacity:.5;color:var(--accent);pointer-events:none}
+.hero .sprig{position:absolute;left:-18px;bottom:-26px;width:170px;opacity:.22;color:var(--accent);pointer-events:none}
 .hero-text{position:relative;min-width:0}
 .hero h2{font-size:clamp(26px,5.4vw,40px);line-height:1.08;margin:6px 0 6px}
 .hero h2 em{font-style:normal;color:var(--el)}
@@ -125,7 +126,7 @@ section.block{margin-top:26px}
 .fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .fchip .dot{width:7px;height:7px;border-radius:50%;background:var(--c)}
 .custom-range{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
-input[type=date],input[type=text],input[type=number],input[type=search],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 11px;min-width:0;width:100%}
+input[type=date],input[type=text],input[type=email],input[type=number],input[type=search],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 11px;min-width:0;width:100%}
 textarea{resize:vertical;min-height:70px}
 .custom-range input{width:auto}
 
@@ -802,7 +803,7 @@ function hero(){
     <div class="hero-text">
       <div class="eyebrow">${esc(fLong(TODAY))}</div>
       <h2>Heute ist <em>${el.n}</em>.</h2>
-      <div class="sub">${esc(m.phase)} · ${m.asc?"aufsteigend":"absteigend"} · Mond in ${esc(m.sign)} · ${Math.round(m.illum*100)} % beleuchtet</div>
+      <div class="sub">${esc(m.phase)} · ${m.asc?"aufsteigend":"absteigend"} · Mond in ${esc(m.sign)} · ${Math.round(m.illum*100)}&nbsp;% beleuchtet</div>
       <div class="chips">${gf.map(g=>`<span class="chip good">${esc(g)}</span>`).join("")}</div>
     </div>
     <div class="hero-moon">${moonSVG(m,92)}</div>
@@ -953,7 +954,7 @@ function vMond(){
       <button class="iconbtn" data-calm="1" aria-label="Nächster Monat"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
     <div class="cal">${cells}</div>
     <div class="legend">${Object.values(EL).map(e=>`<span style="--el:var(${e.v})"><i></i>${e.n}</span>`).join("")}<span>↑ aufsteigend</span><span>↓ absteigend</span></div>
-    <div class="daycard"><div>${moonSVG(sm,64)}</div><div style="min-width:0"><div class="eyebrow">${esc(fLong(sd))}</div><h3 style="font-size:21px;margin:2px 0">${esc(sm.phase)} · <span style="color:var(${se.v})">${se.n}</span></h3><div class="muted" style="font-size:14px">Mond in ${esc(sm.sign)}, ${sm.asc?"aufsteigend":"absteigend"}, ${Math.round(sm.illum*100)} % beleuchtet</div><div class="tmeta">${actions}</div></div></div>
+    <div class="daycard"><div>${moonSVG(sm,64)}</div><div style="min-width:0"><div class="eyebrow">${esc(fLong(sd))}</div><h3 style="font-size:21px;margin:2px 0">${esc(sm.phase)} · <span style="color:var(${se.v})">${se.n}</span></h3><div class="muted" style="font-size:14px">Mond in ${esc(sm.sign)}, ${sm.asc?"aufsteigend":"absteigend"}, ${Math.round(sm.illum*100)}&nbsp;% beleuchtet</div><div class="tmeta">${actions}</div></div></div>
     <div class="explain">
       <div class="tip"><h3>Zu- und abnehmend</h3><p>Abnehmender Mond gilt als Zeit für Schnitt, Düngung und Pflege, weil die Säfte nach unten ziehen. Zunehmender Mond ist Säzeit.</p></div>
       <div class="tip"><h3>Auf- und absteigend</h3><p>Der absteigende Mond ist die traditionelle Pflanzzeit: Wurzeln wachsen gut an. Aufsteigend ist Erntezeit für Obst und Kräuter.</p></div>
