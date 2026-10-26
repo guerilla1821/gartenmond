@@ -1,0 +1,1203 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gartenmond</title>
+<meta name="theme-color" content="#2E5B3D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gartenmond">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0}
+[hidden]{display:none!important}
+/* Layout: eine ruhige Spalte (max 980px), Mond-Kopf als einziger Blickfang, Navigation unten am Handy, oben am Desktop */
+:root{
+  --bg:#F1F4ED; --surface:#FBFCF8; --surface-2:#E8EEE4; --ink:#1C2620; --muted:#5D6A60; --line:#D9E0D3;
+  --accent:#2E5B3D; --accent-ink:#F4F8F2; --accent-soft:#DFE9DC; --bloom:#954F74; --bloom-soft:#F1E2EA;
+  --moon-lit:#EDE3BC; --moon-dark:#2C362F; --halo:rgba(237,227,188,.0);
+  --el-B:#954F74; --el-L:#3B7547; --el-F:#A8731C; --el-W:#7A5636;
+  --t-schnitt:#8A4C6E; --t-duengen:#7F7418; --t-pflanzen:#7A5636; --t-schutz:#4A6884; --t-pflege:#3B7547; --t-ernte:#A8731C;
+  --danger:#A3392F; --warn:#9A6A12;
+  --f-display:"Young Serif", "Iowan Old Style", Georgia, serif;
+  --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:14px; --r-sm:9px;
+  --shadow:0 1px 2px rgba(28,38,32,.06), 0 8px 24px -12px rgba(28,38,32,.18);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101511; --surface:#171E18; --surface-2:#1E2720; --ink:#E2E9DE; --muted:#97A498; --line:#29342B;
+  --accent:#8EBC94; --accent-ink:#0F1A12; --accent-soft:#1E2D22; --bloom:#D59BBA; --bloom-soft:#33222C;
+  --moon-lit:#F1E8C6; --moon-dark:#252E27;
+  --el-B:#D59BBA; --el-L:#86C08E; --el-F:#E0B262; --el-W:#C69C74;
+  --t-schnitt:#D59BBA; --t-duengen:#CFC26A; --t-pflanzen:#C69C74; --t-schutz:#93B2CF; --t-pflege:#86C08E; --t-ernte:#E0B262;
+  --danger:#E6877C; --warn:#E1B45E;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101511; --surface:#171E18; --surface-2:#1E2720; --ink:#E2E9DE; --muted:#97A498; --line:#29342B;
+  --accent:#8EBC94; --accent-ink:#0F1A12; --accent-soft:#1E2D22; --bloom:#D59BBA; --bloom-soft:#33222C;
+  --moon-lit:#F1E8C6; --moon-dark:#252E27;
+  --el-B:#D59BBA; --el-L:#86C08E; --el-F:#E0B262; --el-W:#C69C74;
+  --t-schnitt:#D59BBA; --t-duengen:#CFC26A; --t-pflanzen:#C69C74; --t-schutz:#93B2CF; --t-pflege:#86C08E; --t-ernte:#E0B262;
+  --danger:#E6877C; --warn:#E1B45E;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.6);
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;margin:0;text-wrap:balance;letter-spacing:-.005em}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:12px 120px}
+.eyebrow{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+
+/* Kopf */
+.top{display:flex;align-items:center;gap:12px;padding-block:6px 14px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand h1{font-size:22px}
+.brand svg{color:var(--accent)}
+.topnav{display:none;gap:4px;margin-left:auto;background:var(--surface-2);padding:4px;border-radius:999px}
+.topnav button{border:0;background:transparent;padding:7px 14px;border-radius:999px;color:var(--muted);font-weight:600;font-size:14px}
+.topnav button[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.me-chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px 4px 4px;font-size:13px;font-weight:600;margin-left:auto}
+.ini{width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.ini.lg{width:34px;height:34px;font-size:14px}
+button.me-chip{cursor:pointer}
+body.gated .bottomnav,body.gated .topnav{display:none!important}
+.gate{max-width:440px;margin:6vh auto 0;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px 24px;display:flex;flex-direction:column;gap:12px}
+.gate h2{font-size:30px;line-height:1.1}
+.gate p{margin:0}
+.gate-moon{width:84px;height:84px;position:relative;margin-bottom:4px}
+.gate-moon::before{content:"";position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle, color-mix(in oklab, var(--moon-lit) 45%, transparent), transparent 68%)}
+.gate-moon svg{position:relative}
+.gate-msg{color:var(--danger);font-size:14px}
+code{font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+@media (min-width:860px){.topnav{display:flex}.me-chip{margin-left:0}.bottomnav{display:none!important}.wrap{padding-bottom:48px}}
+
+/* Mond-Held */
+.hero{position:relative;overflow:hidden;border-radius:22px;background:
+  radial-gradient(120% 90% at 88% 10%, color-mix(in oklab, var(--moon-lit) 26%, transparent) 0%, transparent 55%),
+  linear-gradient(160deg, var(--accent-soft), var(--surface) 70%);
+  border:1px solid var(--line);padding:22px 22px 18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.hero .sprig{position:absolute;left:-18px;bottom:-26px;width:170px;opacity:.5;color:var(--accent);pointer-events:none}
+.hero-text{position:relative;min-width:0}
+.hero h2{font-size:clamp(26px,5.4vw,40px);line-height:1.08;margin:6px 0 6px}
+.hero h2 em{font-style:normal;color:var(--el)}
+.hero .sub{color:var(--muted);font-size:14.5px}
+.hero-moon{position:relative;width:110px;height:110px;display:grid;place-items:center}
+.hero-moon::before{content:"";position:absolute;inset:-16px;border-radius:50%;background:radial-gradient(circle, color-mix(in oklab, var(--moon-lit) 45%, transparent), transparent 68%)}
+.hero-moon svg{position:relative}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap}
+.chip .dot{width:8px;height:8px;border-radius:50%;background:var(--c,var(--accent))}
+.chip.good{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+@media (max-width:520px){.hero{grid-template-columns:1fr;padding:18px}.hero-moon{position:absolute;right:12px;top:12px;width:72px;height:72px}.hero-moon svg{width:58px;height:58px}.hero h2{padding-right:70px}}
+
+/* Mondstreifen */
+.strip{display:flex;gap:4px;overflow-x:auto;padding:4px 2px 8px;margin-top:14px;scrollbar-width:thin}
+.sd{flex:0 0 40px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0 7px;border-radius:10px;background:var(--surface);border:1px solid var(--line);font-size:11px}
+.sd b{font-size:13px;font-weight:600}
+.sd i{display:block;width:18px;height:3px;border-radius:2px;background:var(--el)}
+.sd.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.sd .ar{font-size:10px;color:var(--muted);line-height:1}
+
+/* Sektionen */
+section.block{margin-top:26px}
+.block-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.block-head h2{font-size:24px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:4px;background:var(--surface-2);padding:4px;border-radius:12px}
+.seg button{border:0;background:transparent;border-radius:9px;padding:6px 11px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-top:10px;scrollbar-width:none}
+.fchip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;white-space:nowrap;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fchip .dot{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.custom-range{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+input[type=date],input[type=text],input[type=number],input[type=search],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 11px;min-width:0;width:100%}
+textarea{resize:vertical;min-height:70px}
+.custom-range input{width:auto}
+
+/* Aufgaben */
+.week{margin-top:20px}
+.week-h{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.week-h h3{font-size:18px}
+.tasks{display:flex;flex-direction:column;gap:8px}
+.task{display:grid;grid-template-columns:58px 1fr auto;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.task.open{box-shadow:var(--shadow)}
+.dayb{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;background:var(--surface-2);padding:6px 0 7px;line-height:1.1;position:relative}
+.dayb small{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.dayb b{font-family:var(--f-display);font-weight:400;font-size:22px}
+.dayb .el{position:absolute;bottom:-3px;width:22px;height:4px;border-radius:2px;background:var(--el)}
+.tmain{min-width:0}
+.ttype{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--c)}
+.ttype svg{width:15px;height:15px}
+.tname{font-weight:600;font-size:15.5px;margin-top:1px}
+.tzone{color:var(--muted);font-size:13px}
+.tbody{margin-top:8px;font-size:14px;color:var(--ink);max-width:62ch}
+.tmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.q{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px}
+.q.ideal{background:var(--accent-soft);color:var(--accent)}
+.q.gut{background:var(--surface-2);color:var(--ink)}
+.q.moeglich{background:transparent;border:1px dashed var(--line);color:var(--muted)}
+.why{font-size:12.5px;color:var(--muted);margin-top:6px}
+.tact{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.iconbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--muted)}
+.iconbtn:hover{color:var(--ink);border-color:var(--ink)}
+.iconbtn.check{color:var(--accent);border-color:color-mix(in oklab,var(--accent) 40%, var(--line))}
+.iconbtn.check:hover{background:var(--accent);color:var(--accent-ink)}
+.iconbtn svg{width:18px;height:18px}
+.linkbtn{border:0;background:none;padding:0;color:var(--accent);font-weight:600;font-size:13px}
+.task.isdone{opacity:.62}
+.task.isdone .tname{text-decoration:line-through}
+details.donebox{margin-top:16px}
+details.donebox summary{cursor:pointer;color:var(--muted);font-weight:600;font-size:14px}
+@media (max-width:420px){.task{grid-template-columns:50px 1fr;}.tact{grid-column:1/-1;flex-direction:row;justify-content:flex-end}}
+
+/* Tipps */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.tip{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.tip h3{font-size:16px;margin-bottom:6px}
+.tip ul{margin:0;padding-left:18px;font-size:14px}
+.tip li+li{margin-top:4px}
+
+/* Leerzustand */
+.empty{border:1.5px dashed var(--line);border-radius:18px;padding:28px 20px;text-align:center;background:var(--surface)}
+.empty svg{color:var(--accent);margin-bottom:6px}
+.empty h3{font-size:20px;margin-bottom:4px}
+.empty p{color:var(--muted);max-width:44ch;margin:0 auto 14px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid var(--line);background:var(--surface);padding:9px 16px;font-weight:600;font-size:14px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.danger{color:var(--danger);border-color:color-mix(in oklab,var(--danger) 40%,var(--line))}
+.btn.danger.sure{background:var(--danger);color:var(--surface);border-color:var(--danger)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn svg{width:16px;height:16px}
+
+/* Zonen */
+.zones{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.zone{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:left;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.zone::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:var(--zc);opacity:.13}
+.zone h3{font-size:20px}
+.zone .glyphs{display:flex;gap:2px;flex-wrap:wrap;color:var(--accent);min-height:30px}
+.zone .meta{display:flex;gap:6px;flex-wrap:wrap}
+.zone-detail-head{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.zone-detail-head .zdot{width:14px;height:14px;border-radius:50%;background:var(--zc);margin-top:10px}
+.back{border:0;background:none;color:var(--muted);font-weight:600;display:inline-flex;align-items:center;gap:6px;padding:4px 0;margin-bottom:8px}
+.plist{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.pl{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px}
+.pl .g{width:52px;height:52px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
+.pl .pn{font-weight:600}
+.pl .pb{font-size:13px;color:var(--muted);font-style:italic}
+.pl .pnote{font-size:13px;color:var(--muted)}
+.badge{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:6px;background:var(--bloom-soft);color:var(--bloom)}
+
+/* Katalog */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:14px}
+.pc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;text-align:left}
+.pc:hover{border-color:var(--accent)}
+.pc .g{width:48px;height:48px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
+.pc .pn{font-weight:600;line-height:1.25}
+.pc .pb{font-size:12.5px;color:var(--muted);font-style:italic}
+.pc .icons{display:flex;gap:8px;font-size:11.5px;color:var(--muted);margin-top:2px}
+.searchbar{display:flex;gap:8px;align-items:center}
+.searchbar input{flex:1}
+
+/* Mondkalender */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal .wd{font-size:11px;text-align:center;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding-bottom:4px}
+.cd{aspect-ratio:1/1.1;max-width:100%;border-radius:10px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:5px 2px 6px;font-size:12px;position:relative}
+.cd.out{visibility:hidden}
+.cd.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.cd.sel{background:var(--accent-soft)}
+.cd b{font-weight:600}
+.cd .el{width:60%;height:4px;border-radius:2px;background:var(--el)}
+.cd .ar{position:absolute;top:4px;right:5px;font-size:10px;color:var(--muted)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:4px;border-radius:2px;background:var(--el)}
+.daycard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.explain{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:14px}
+.explain .tip p{margin:0;font-size:14px}
+.note{border-left:3px solid var(--warn);background:var(--surface);padding:12px 14px;border-radius:0 12px 12px 0;font-size:14px;margin-top:14px;max-width:75ch}
+
+/* Team */
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.role{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.role.mine{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.role h3{font-size:18px;margin-bottom:4px}
+.role ul{margin:6px 0 0;padding-left:18px;font-size:13.5px}
+.members{display:flex;flex-direction:column;gap:8px}
+.member{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.member img{width:32px;height:32px;border-radius:50%}
+.steps{margin:0;padding-left:20px;font-size:14px;max-width:70ch}
+.steps li+li{margin-top:6px}
+
+/* Sheet */
+.overlay{position:fixed;inset:0;background:rgba(10,16,12,.45);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);width:100%;max-width:640px;max-height:92%;overflow-y:auto;border-radius:22px 22px 0 0;padding:18px max(18px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(18px, env(safe-area-inset-left, 0px));box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+@media (min-width:700px){.overlay{align-items:center}.sheet{border-radius:22px;max-height:86%}}
+.sheet-h{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.sheet-h h2{font-size:24px;line-height:1.15}
+.form{display:flex;flex-direction:column;gap:12px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.field .hint{font-size:12px;color:var(--muted);margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swatches{display:flex;gap:8px}
+.swatches label{width:30px;height:30px;border-radius:50%;background:var(--sw);display:grid;place-items:center;cursor:pointer;border:2px solid transparent}
+.swatches input{position:absolute;opacity:0;pointer-events:none}
+.swatches input:checked + span{outline:2px solid var(--ink);outline-offset:3px;border-radius:50%;width:30px;height:30px;display:block}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.yearplan{overflow-x:auto;margin-top:6px}
+.yp{display:grid;grid-template-columns:110px repeat(12,minmax(22px,1fr));gap:2px 0;align-items:center;min-width:420px;font-size:12px}
+.yp .mh{font-size:10.5px;color:var(--muted);text-align:center;font-weight:700}
+.yp .lab{font-weight:600;font-size:12px;padding-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yp .bar{height:10px;border-radius:5px;background:var(--c)}
+.yp .cur{outline:1px dashed var(--muted);outline-offset:1px}
+.steckbrief p{margin:0 0 10px;max-width:62ch}
+.tlist{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.tlist div{border-left:3px solid var(--c);padding-left:10px;font-size:14px}
+.tlist b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--c)}
+.pickrow{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;padding:8px;border-radius:12px;border:0;background:none;text-align:left;width:100%}
+.pickrow:hover{background:var(--surface-2)}
+.pickrow .g{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent)}
+
+/* Navigation unten */
+.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in oklab,var(--surface) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:6px max(8px, env(safe-area-inset-right, 0px)) calc(6px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px))}
+.bottomnav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--muted);padding:4px 8px;border-radius:10px;min-width:56px}
+.bottomnav button svg{width:22px;height:22px}
+.bottomnav button[aria-current="page"]{color:var(--accent)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom, 0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;z-index:60;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+.banner{background:var(--bloom-soft);color:var(--ink);border-radius:12px;padding:10px 14px;font-size:13.5px;margin-bottom:12px}
+@media (prefers-reduced-motion:no-preference){.task,.zone,.pc{transition:border-color .15s, box-shadow .15s}.sheet{animation:up .22s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M20.5 4.5a11.5 11.5 0 1 0 7 20.6A10 10 0 0 1 20.5 4.5Z" stroke="currentColor" stroke-width="1.6"/><path d="M11 25c2-6 5-9 9-11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14.5 19.5c-2.6-.2-4.4-1.6-5-4 2.6-.3 4.5.9 5 4Zm2.6-3c.2-2.6 1.6-4.3 4-5 .2 2.6-1 4.4-4 5Z" fill="currentColor"/></svg>
+      <h1>Gartenmond</h1>
+    </div>
+    <nav class="topnav" id="topnav" aria-label="Bereiche"></nav>
+    <button class="me-chip" id="mechip" hidden aria-label="Team und Konto"></button>
+  </header>
+  <div id="banner"></div>
+  <main id="view"></main>
+</div>
+<nav class="bottomnav" id="bottomnav" aria-label="Bereiche"></nav>
+<div id="sheetroot"></div>
+<div id="toastroot"></div>
+
+<script>
+(()=>{
+"use strict";
+/* ---------- Helfer ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const LS={get(k,d){try{const v=localStorage.getItem("gm."+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("gm."+k,JSON.stringify(v))}catch(e){}}};
+const DAY=86400000;
+const sod=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+const addD=(d,n)=>new Date(d.getFullYear(),d.getMonth(),d.getDate()+n);
+const dkey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const pkey=k=>{const[y,m,d]=k.split("-").map(Number);return new Date(y,m-1,d)};
+const fmt=(d,o)=>d.toLocaleDateString("de-DE",o);
+const fShort=d=>fmt(d,{day:"numeric",month:"short"});
+const fLong=d=>fmt(d,{weekday:"long",day:"numeric",month:"long"});
+const TODAY=sod(new Date());
+const uid=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const MONTHS=["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+const isoWeek=d=>{const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const dn=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-dn);const y0=new Date(Date.UTC(t.getUTCFullYear(),0,1));return Math.ceil(((t-y0)/DAY+1)/7)};
+const monday=d=>addD(d,-((d.getDay()+6)%7));
+
+/* ---------- Mond ---------- */
+const rad=Math.PI/180, nrm=x=>((x%360)+360)%360;
+function astro(t){
+  const jd=t/DAY+2440587.5, T=(jd-2451545)/36525, S=Math.sin;
+  const L0=218.3164477+481267.88123421*T, D=(297.8501921+445267.1114034*T)*rad, M=(357.5291092+35999.0502909*T)*rad,
+        Mp=(134.9633964+477198.8675055*T)*rad, F=(93.2720950+483202.0175233*T)*rad;
+  const lon=nrm(L0+6.289*S(Mp)+1.274*S(2*D-Mp)+0.658*S(2*D)+0.214*S(2*Mp)-0.186*S(M)-0.114*S(2*F)+0.059*S(2*D-2*Mp)+0.057*S(2*D-M-Mp)+0.053*S(2*D+Mp)+0.046*S(2*D-M)-0.041*S(M-Mp)-0.035*S(D)-0.031*S(M+Mp));
+  const lat=5.128*S(F)+0.281*S(Mp+F)+0.278*S(Mp-F)+0.173*S(2*D-F)+0.055*S(2*D-Mp+F)+0.046*S(2*D-Mp-F)+0.033*S(2*D+F)+0.017*S(2*Mp+F);
+  const g=(357.529+35999.050*T)*rad, sun=nrm(280.466+36000.770*T+1.915*S(g)+0.020*S(2*g));
+  const eps=(23.439-0.013*T)*rad;
+  const dec=Math.asin(S(lat*rad)*Math.cos(eps)+Math.cos(lat*rad)*S(eps)*S(lon*rad))/rad;
+  return {lon,dec,elong:nrm(lon-sun)};
+}
+const SIGNS=["Widder","Stier","Zwillinge","Krebs","Löwe","Jungfrau","Waage","Skorpion","Schütze","Steinbock","Wassermann","Fische"];
+const SIGN_EL="FWBLFWBLFWBL";
+const EL={B:{n:"Blütentag",s:"Blüte",v:"--el-B"},L:{n:"Blatttag",s:"Blatt",v:"--el-L"},F:{n:"Fruchttag",s:"Frucht",v:"--el-F"},W:{n:"Wurzeltag",s:"Wurzel",v:"--el-W"}};
+const mcache=new Map();
+function moon(d){
+  const k=dkey(d); if(mcache.has(k)) return mcache.get(k);
+  const y=d.getFullYear(),mo=d.getMonth(),da=d.getDate();
+  const noon=new Date(y,mo,da,12).getTime();
+  const a=astro(noon), a0=astro(noon-6*3600e3), a1=astro(noon+6*3600e3);
+  const sid=nrm(a.lon-(24.21+(y-2026)*0.014)), si=Math.floor(sid/30)%12;
+  const m0=astro(new Date(y,mo,da).getTime()).elong; let e1=astro(new Date(y,mo,da+1).getTime()).elong; if(e1<m0) e1+=360;
+  let ev=null; for(const [deg,n] of [[0,"Neumond"],[90,"Erstes Viertel"],[180,"Vollmond"],[270,"Letztes Viertel"],[360,"Neumond"]]) if(m0<=deg&&deg<e1) ev=n;
+  const waxing=a.elong<180, asc=a1.dec>a0.dec;
+  const r={waxing,waning:!waxing,asc,desc:!asc,illum:(1-Math.cos(a.elong*rad))/2,elong:a.elong,sign:SIGNS[si],el:SIGN_EL[si],event:ev,
+    phase:ev||(a.elong<90?"Zunehmende Sichel":a.elong<180?"Zunehmender Mond":a.elong<270?"Abnehmender Mond":"Abnehmende Sichel")};
+  mcache.set(k,r); return r;
+}
+function moonSVG(m,size){
+  const r=size/2-1, c=size/2, k=m.illum, wx=m.waxing;
+  const rx=Math.abs(2*k-1)*r, outer=wx?1:0, inner=k<.5?(wx?0:1):(wx?1:0);
+  const lit=k>0.985?`<circle cx="${c}" cy="${c}" r="${r}" fill="var(--moon-lit)"/>`:k<0.015?"":
+    `<path d="M${c} ${c-r} A${r} ${r} 0 0 ${outer} ${c} ${c+r} A${rx} ${r} 0 0 ${inner} ${c} ${c-r}Z" fill="var(--moon-lit)"/>`;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" aria-hidden="true"><circle cx="${c}" cy="${c}" r="${r}" fill="var(--moon-dark)"/>${lit}<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="var(--line)" stroke-width="${size>40?1:.6}"/></svg>`;
+}
+
+/* ---------- Aufgabentypen und Mondregeln ---------- */
+const IC={
+  schnitt:'<path d="M6 7a2.5 2.5 0 1 0 0-.01M6 17a2.5 2.5 0 1 0 0-.01M8 8.5 20 18M8 15.5 20 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+  duengen:'<path d="M12 21v-8M12 13c0-4 3-7 7-7 0 4-3 7-7 7Zm0 2c0-3-2.5-5.5-6-5.5 0 3 2.5 5.5 6 5.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>',
+  pflanzen:'<path d="M12 3v9M8.5 12h7l-1 8.5h-5L8.5 12ZM12 3l-3 3M12 3l3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+  schutz:'<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5 12 6l2.5-1.5M9.5 19.5 12 18l2.5 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+  pflege:'<path d="M7 20c0-6 2-10 5-13M12 7c3-1 5-1 7 1-2 3-5 4-7 3M12 7c-2-2-4.5-2.5-7-1.5 1.5 3 4 4 7 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+  ernte:'<path d="M4 10h16l-1.5 9.5h-13L4 10ZM8 10a4 4 0 0 1 8 0M9 14v2M12 14v2M15 14v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+  teilen:'<path d="M12 20V11M12 11 7 5M12 11l5-6M4 20h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>',
+};
+const TT={
+  schnitt:{l:"Rückschnitt",c:"--t-schnitt",i:"schnitt",max:4},
+  duengen:{l:"Düngen",c:"--t-duengen",i:"duengen",max:3},
+  pflanzen:{l:"Pflanzen",c:"--t-pflanzen",i:"pflanzen",max:3.5},
+  auspflanzen:{l:"Auspflanzen",c:"--t-pflanzen",i:"pflanzen",max:3.5},
+  teilen:{l:"Teilen & Umsetzen",c:"--t-pflanzen",i:"teilen",max:3.5},
+  schutz:{l:"Winterschutz",c:"--t-schutz",i:"schutz",max:1.5},
+  pflege:{l:"Pflege",c:"--t-pflege",i:"pflege",max:1.5},
+  ernte:{l:"Ernte",c:"--t-ernte",i:"ernte",max:3},
+  aussaat:{l:"Säen",c:"--t-ernte",i:"pflanzen",max:3},
+};
+const icon=(n,s=16)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true">${IC[n]||IC.pflege}</svg>`;
+function scoreDay(type,m,el){
+  let s=0; const r=[]; const add=(c,v,t)=>{if(c){s+=v;r.push(t)}};
+  switch(type){
+    case "schnitt": add(m.waning,2,"abnehmender Mond"); add(m.desc,1,"absteigend"); add(m.el===el,1,EL[el].n); if(m.event==="Vollmond"||m.event==="Neumond"){s-=1;} break;
+    case "duengen": add(m.waning,2,"abnehmender Mond"); add(m.el===el,1,EL[el].n); break;
+    case "pflanzen": case "auspflanzen": case "teilen": add(m.desc,2,"absteigender Mond (Pflanzzeit)"); add(m.waning,.5,"abnehmend"); add(m.el===el,1,EL[el].n); break;
+    case "schutz": case "pflege": add(m.waning,1,"abnehmender Mond"); add(m.desc,.5,"absteigend"); break;
+    case "ernte": add(m.asc,2,"aufsteigender Mond"); add(m.el===el,1,EL[el].n); break;
+    case "aussaat": add(m.waxing,1,"zunehmender Mond"); add(m.asc,1,"aufsteigend"); add(m.el===el,1,EL[el].n); break;
+  }
+  return {s,r};
+}
+const quality=(type,s)=>{const q=s/(TT[type]?.max||3);return q>=.8?["ideal","Idealer Tag"]:q>=.5?["gut","Guter Tag"]:["moeglich","Möglich"]};
+function goodFor(m){
+  const g=[]; if(m.waning){g.push("Schneiden","Düngen","Winterschutz")} else {g.push("Säen")}
+  if(m.desc) g.push("Pflanzen & Umsetzen"); else g.push("Ernten");
+  return g;
+}
+
+/* ---------- Pflanzenkatalog ---------- */
+const CATS=["Rosen","Sträucher","Hecken","Stauden","Gräser","Zwiebeln & Knollen","Kräuter","Obst","Kletterpflanzen","Kübelpflanzen","Rasen"];
+const P=(id,n,b,c,e,l,w,h,d,t)=>({id,n,b,c,e,l,w,h,d,t});
+const CATALOG=[
+P("edelrose","Edelrose / Beetrose","Rosa × hybrida","Rosen","B","Sonne",2,"winterhart, Veredelung schützen","Öfterblühend, braucht tiefgründigen, humosen Boden und einen luftigen Platz, damit das Laub schnell abtrocknet (beugt Sternrußtau vor). Nie dorthin pflanzen, wo zuvor Rosen standen.",[
+ ["schnitt","03-15","04-25","Wenn die Forsythie blüht: auf 3–5 kräftige Triebe mit je 3–5 Augen kürzen. Schräg schneiden, 5 mm über einem nach außen zeigenden Auge. Totes und nach innen wachsendes Holz ganz entfernen."],
+ ["duengen","03-25","04-30","Organischen Rosendünger streuen (ca. 60–80 g/m²) und flach einharken, danach gießen."],
+ ["pflege","06-01","09-15","Verblühtes laufend bis zum ersten voll ausgebildeten, fünfteiligen Blatt abschneiden. Das bringt die Nachblüte."],
+ ["duengen","06-15","07-05","Zweite Gabe nach der ersten Blüte. Ab Mitte Juli keinen Stickstoff mehr, damit die Triebe vor dem Winter ausreifen."],
+ ["pflanzen","10-15","11-20","Wurzelnackte Rosen 24 h wässern, Wurzeln leicht einkürzen, Veredelungsstelle 5 cm unter die Erde setzen und kräftig einschlämmen."],
+ ["schutz","11-05","12-05","Veredelungsstelle 15–20 cm hoch mit Erde oder Kompost anhäufeln, Tannenreisig darüberlegen. Im April wieder abtragen."]]),
+P("strauchrose","Strauchrose / Englische Rose","Rosa (Strauchrosen)","Rosen","B","Sonne",2,"winterhart","Locker wachsend, 1–2 m hoch, oft duftend. Verträgt etwas mehr Schatten als Edelrosen, blüht aber in voller Sonne am reichsten.",[
+ ["schnitt","03-15","04-25","Zur Forsythienblüte alle Triebe um etwa ein Drittel einkürzen. Alle 2–3 Jahre 1–2 der ältesten Triebe bodennah herausnehmen."],
+ ["duengen","03-25","04-30","Rosendünger oder gut verrotteten Mist um die Pflanze verteilen und einarbeiten."],
+ ["pflege","06-10","09-15","Verblühte Blütenbüschel abschneiden. Bei Hagebuttensorten im Herbst stehen lassen."],
+ ["duengen","06-20","07-10","Nach der Hauptblüte nachdüngen, danach nicht mehr."],
+ ["schutz","11-05","12-05","Basis anhäufeln, in rauen Lagen Reisig in die Triebe stecken."]]),
+P("kletterrose","Kletterrose (öfterblühend)","Rosa (Climber)","Rosen","B","Sonne",2,"winterhart","Bildet steife, lange Triebe für Rankgitter, Bögen und Wände. Waagrecht gezogene Triebe blühen deutlich reicher.",[
+ ["schnitt","03-15","04-20","Seitentriebe auf 2–5 Augen kürzen. Lange Haupttriebe möglichst waagrecht oder bogig anbinden. Alle paar Jahre einen alten Haupttrieb ersetzen."],
+ ["duengen","03-25","04-30","Rosendünger geben und einarbeiten."],
+ ["pflege","06-15","09-15","Verblühtes abschneiden, neue Triebe locker anbinden."],
+ ["schutz","11-10","12-10","Basis anhäufeln. An sonnigen Wänden Schattiermatte gegen Wintersonne."]]),
+P("bodendeckerrose","Bodendeckerrose","Rosa (Kleinstrauchrosen)","Rosen","B","Sonne",1,"sehr robust","Pflegeleicht und flächig, für Böschungen und Beetränder. Robuste ADR-Sorten kommen fast ohne Pflanzenschutz aus.",[
+ ["schnitt","03-15","04-25","Alle 2–3 Jahre mit der Heckenschere auf 20–30 cm einkürzen, Totholz entfernen."],
+ ["duengen","03-25","04-30","Eine Gabe Rosendünger genügt."]]),
+P("bauernhortensie","Bauernhortensie","Hydrangea macrophylla","Sträucher","B","Halbschatten",3,"bedingt winterhart, Knospen frostempfindlich","Blüht am Vorjahrestrieb: Die Knospen für den Sommer sitzen schon im Herbst an den Triebspitzen. Braucht humosen, kalkarmen, stets feuchten Boden. Blaue Sorten bleiben nur in saurem Boden blau.",[
+ ["schnitt","03-10","04-15","Nur alte Blütenstände bis zum ersten kräftigen Knospenpaar abschneiden und erfrorene oder sehr alte Triebe bodennah entfernen. Nicht stark kürzen, sonst fällt die Blüte aus."],
+ ["duengen","04-01","07-31","Alle 3–4 Wochen Hortensien- oder Rhododendrondünger, ab August nicht mehr."],
+ ["pflege","05-15","09-15","Bei Trockenheit morgens durchdringend gießen, möglichst Regenwasser (kalkarm)."],
+ ["schutz","11-01","11-30","Verblühte Blütenstände über Winter stehen lassen, sie schützen die Knospen. Fuß mit Laub mulchen, bei Kahlfrost Vlies überlegen."]]),
+P("rispenhortensie","Rispenhortensie","Hydrangea paniculata","Sträucher","B","Sonne",2,"voll winterhart","Blüht am diesjährigen Trieb und verträgt daher kräftigen Rückschnitt. Sonniger als die Bauernhortensie, Blüten färben sich im Herbst oft rosa.",[
+ ["schnitt","02-15","03-31","Alle Triebe des Vorjahres auf 2–3 Knospenpaare zurückschneiden, schwache Triebe ganz entfernen. Je kräftiger der Schnitt, desto größer die Blüten."],
+ ["duengen","04-01","06-30","Im Frühjahr Kompost oder Hortensiendünger, im Juni ein zweites Mal."],
+ ["pflege","06-01","08-31","Bei Hitze gründlich gießen, Mulchschicht hält den Boden feucht."]]),
+P("annabelle","Schneeballhortensie 'Annabelle'","Hydrangea arborescens","Sträucher","B","Halbschatten",3,"voll winterhart","Große weiße Ballblüten am neuen Holz. Neigt nach Regen zum Umkippen, eine Staudenstütze hilft.",[
+ ["schnitt","02-15","03-31","Alle Triebe auf 20–30 cm über dem Boden zurückschneiden."],
+ ["duengen","04-01","06-30","Kompost und Hortensiendünger, ab Juli nicht mehr."],
+ ["pflege","05-01","05-31","Staudenring oder Stütze setzen, bevor die Triebe hoch sind."]]),
+P("forsythie","Forsythie","Forsythia × intermedia","Sträucher","B","Sonne",2,"voll winterhart","Frühjahrsblüher am Vorjahrestrieb. Ohne Schnitt verkahlt der Strauch von innen.",[
+ ["schnitt","04-15","05-25","Direkt nach der Blüte 3–4 der ältesten Triebe bodennah entfernen (Auslichten). Nicht einkürzen, sonst entstehen Besen."]]),
+P("flieder","Flieder","Syringa vulgaris","Sträucher","B","Sonne",1,"voll winterhart","Duftender Frühsommerblüher, liebt kalkhaltigen Boden und volle Sonne. Bildet Wurzelausläufer.",[
+ ["pflege","05-20","06-20","Verblühte Rispen ausbrechen, ohne die zwei neuen Knospen darunter zu verletzen."],
+ ["schnitt","06-01","06-30","Nach der Blüte auslichten, Ausläufer am Boden abreißen statt abschneiden."],
+ ["duengen","03-15","04-15","Kompost und etwas Kalk, falls der Boden sauer ist."]]),
+P("sommerflieder","Sommerflieder","Buddleja davidii","Sträucher","B","Sonne",1,"winterhart, Basis schützen","Schmetterlingsmagnet, blüht am neuen Holz. Gilt in der Schweiz als invasiv: Samen vor der Reife abschneiden. Sterile Sorten wählen.",[
+ ["schnitt","03-10","04-10","Kräftig auf 30–50 cm über dem Boden zurückschneiden."],
+ ["pflege","07-01","09-30","Verblühte Rispen sofort abschneiden. Verhindert Selbstaussaat und verlängert die Blüte."]]),
+P("lavendel","Lavendel","Lavandula angustifolia","Sträucher","B","Sonne",1,"winterhart bei trockenem Boden","Will Sonne, mageren und durchlässigen Boden und keine Staunässe. Kaum düngen. Nie ins alte, unbelaubte Holz schneiden, dort treibt er nicht mehr aus.",[
+ ["schnitt","03-25","04-30","Um etwa zwei Drittel kürzen, aber immer einige beblätterte Triebabschnitte stehen lassen."],
+ ["schnitt","07-15","08-15","Nach der Blüte um ein Drittel kürzen (Blütenstiele samt etwas Laub). Erhält die kompakte Form."],
+ ["pflanzen","04-15","05-31","In durchlässigen Boden pflanzen, bei schwerem Boden Kies einarbeiten."],
+ ["schutz","12-01","01-31","Nur bei Kahlfrost locker Reisig auflegen. Nässe schadet mehr als Kälte."]]),
+P("buchs","Buchsbaum","Buxus sempervirens","Hecken","L","Halbschatten",2,"voll winterhart","Klassiker für Einfassungen und Kugeln. Hauptschädling ist der Buchsbaumzünsler: Raupen fressen sich von innen nach außen.",[
+ ["pflege","04-01","09-30","Wöchentlich ins Innere schauen: Gespinste, Kotkrümel, grüne Raupen mit schwarzen Punkten. Früh befallen: absammeln oder mit Bacillus-thuringiensis-Präparat behandeln."],
+ ["schnitt","05-20","06-25","Formschnitt nach dem ersten Austrieb, bei bedecktem Himmel (Sonnenbrandgefahr an frischen Schnittflächen)."],
+ ["schnitt","08-15","09-10","Leichter Korrekturschnitt, später nicht mehr."],
+ ["duengen","04-01","05-15","Buchs- oder Langzeitdünger, bei gelben Blättern zusätzlich Bittersalz."]]),
+P("hainbuche","Hainbuchenhecke","Carpinus betulus","Hecken","L","Sonne",2,"voll winterhart","Sehr schnittverträgliche Laubhecke. Das braune Laub bleibt oft bis zum Frühjahr hängen und gibt Sichtschutz.",[
+ ["schnitt","06-24","07-20","Hauptschnitt nach Johanni. Vorher auf brütende Vögel prüfen. Leicht trapezförmig schneiden, unten breiter als oben."],
+ ["schnitt","08-20","09-20","Optionaler zweiter Formschnitt für exakte Kanten."],
+ ["duengen","03-20","04-30","Hornspäne oder Kompost unter der Hecke verteilen."],
+ ["pflanzen","10-15","11-30","Wurzelnackte Heckenpflanzen: 3–4 Stück pro Meter, nach dem Pflanzen um ein Drittel einkürzen."]]),
+P("liguster","Ligusterhecke","Ligustrum vulgare","Hecken","L","Sonne",2,"voll winterhart","Heimisch, halbimmergrün, sehr robust. Blüten sind bei Insekten beliebt.",[
+ ["schnitt","06-20","07-15","Hauptschnitt nach dem ersten Austrieb, vorher Nester prüfen."],
+ ["schnitt","08-20","09-15","Zweiter Schnitt für dichte Form."],
+ ["duengen","03-20","04-30","Kompost oder organischer Volldünger."]]),
+P("thuja","Thujahecke","Thuja occidentalis","Hecken","L","Sonne",3,"voll winterhart","Immergrün und dicht, verträgt keinen Schnitt ins alte, braune Holz. Bei Trockenheit braune Stellen.",[
+ ["schnitt","06-15","08-15","Nur im grünen Bereich schneiden, Spitze erst kappen, wenn die Endhöhe erreicht ist."],
+ ["duengen","03-20","04-30","Koniferendünger mit Magnesium."],
+ ["schutz","12-01","02-28","An frostfreien Tagen gießen, wenn der Winter trocken ist."]]),
+P("kirschlorbeer","Kirschlorbeer","Prunus laurocerasus","Hecken","L","Halbschatten",2,"winterhart","Immergrüne Hecke. Gilt in der Schweiz als invasiv: Fruchtstände entfernen, damit Vögel die Samen nicht verbreiten. Bei Neupflanzung lieber heimische Alternativen (z. B. Eibe, Liguster).",[
+ ["schnitt","06-20","07-20","Nach dem Austrieb mit der Handheckenschere schneiden. Elektrische Scheren zerfetzen die großen Blätter."],
+ ["pflege","07-01","08-31","Fruchtstände abschneiden, bevor sie schwarz werden."]]),
+P("rhododendron","Rhododendron","Rhododendron-Hybriden","Sträucher","B","Halbschatten",3,"winterhart","Braucht sauren, humosen Boden (pH 4,5–5,5) und Schutz vor Mittagssonne. Flache Wurzeln: nicht hacken, nur mulchen.",[
+ ["pflege","05-20","06-25","Verblühte Dolden vorsichtig ausbrechen, die neuen Knospen darunter schonen."],
+ ["duengen","03-20","04-30","Rhododendrondünger streuen, Rindenmulch erneuern."],
+ ["duengen","06-01","06-30","Zweite, schwächere Gabe nach der Blüte."],
+ ["schutz","12-01","02-28","Vor Wintersonne schützen, an frostfreien Tagen gießen (Frosttrocknis)."]]),
+P("faecherahorn","Fächerahorn","Acer palmatum","Sträucher","L","Halbschatten",2,"winterhart, junge Triebe spätfrostgefährdet","Langsam wachsend, wichtigste Pflege ist Zurückhaltung beim Schnitt. Kein praller Süd-Westwind.",[
+ ["schnitt","07-15","08-31","Nur bei Bedarf: störende oder tote Zweige auf Astring entfernen. Im Frühjahr blutet er stark."],
+ ["duengen","04-01","05-15","Wenig organischer Dünger genügt."],
+ ["schutz","11-01","11-30","Im Kübel: Topf mit Jute und Vlies einpacken, auf Holzfüße stellen."]]),
+P("pfingstrose","Pfingstrose","Paeonia lactiflora","Stauden","B","Sonne",2,"voll winterhart","Langlebige Staude, wird mit den Jahren schöner. Verträgt Umsetzen schlecht und blüht nicht, wenn sie zu tief gepflanzt ist.",[
+ ["duengen","03-15","04-15","Etwas Kompost um die Triebe, keinen Frischmist."],
+ ["pflege","05-01","05-20","Staudenring setzen, bevor die schweren Blüten kommen."],
+ ["pflege","06-10","07-10","Verblühtes abschneiden, Laub stehen lassen."],
+ ["teilen","08-25","09-30","Nur bei Bedarf alle 8–10 Jahre: teilen, Augen max. 3–5 cm unter die Erde."],
+ ["schnitt","10-15","11-30","Laub bodennah abschneiden und entsorgen (nicht kompostieren), beugt Grauschimmel vor."]]),
+P("rittersporn","Rittersporn","Delphinium elatum","Stauden","B","Sonne",2,"voll winterhart","Hohe Blütenkerzen in Blau. Starkzehrer und Schneckenliebling.",[
+ ["duengen","04-01","05-15","Kompost und organischen Volldünger, im Mai nochmals."],
+ ["pflege","04-01","06-15","Schnecken kontrollieren, Austrieb ist besonders gefährdet."],
+ ["schnitt","06-25","07-20","Nach der ersten Blüte handbreit über dem Boden abschneiden (Remontierschnitt). Im September folgt eine zweite Blüte."]]),
+P("katzenminze","Katzenminze","Nepeta × faassenii","Stauden","B","Sonne",1,"voll winterhart","Unverwüstlich, lange Blütezeit, beliebt bei Bienen. Passt zu Rosen.",[
+ ["schnitt","06-25","07-20","Nach der ersten Blüte um die Hälfte zurückschneiden, dann blüht sie erneut."],
+ ["schnitt","03-01","03-31","Alte Triebe bodennah abschneiden."]]),
+P("storchschnabel","Storchschnabel","Geranium (Stauden)","Stauden","B","Halbschatten",2,"voll winterhart","Bodendeckende, unkomplizierte Staude für Sonne bis Halbschatten.",[
+ ["schnitt","07-01","07-31","Nach der Blüte bodennah zurückschneiden, frisches Laub und oft Nachblüte."],
+ ["teilen","03-15","04-30","Alle 4–5 Jahre teilen, wenn die Mitte verkahlt."]]),
+P("funkie","Funkie","Hosta","Stauden","L","Schatten",3,"voll winterhart","Blattschmuckstaude für Schatten und Halbschatten. Schnecken sind der Hauptgegner.",[
+ ["pflege","04-01","06-15","Ab Austrieb Schneckenschutz: absammeln am Abend, Schneckenkragen oder Eisen-III-Phosphat."],
+ ["teilen","03-25","04-30","Teilen, sobald die Spitzen sichtbar sind, mit dem Spaten durchstechen."],
+ ["duengen","04-01","05-15","Kompost und etwas Hornspäne."],
+ ["schnitt","11-01","11-30","Eingezogenes Laub entfernen (Schneckenverstecke)."]]),
+P("sonnenhut","Sonnenhut","Echinacea purpurea","Stauden","B","Sonne",1,"winterhart","Präriestaude, blüht bis in den Herbst. Samenstände sind Vogelfutter und Winterschmuck.",[
+ ["schnitt","03-01","03-31","Samenstände über Winter stehen lassen, im März bodennah schneiden."],
+ ["pflege","07-15","09-15","Verblühtes abschneiden verlängert die Blüte."]]),
+P("fetthenne","Fetthenne","Hylotelephium (Sedum telephium)","Stauden","B","Sonne",1,"voll winterhart","Spätblüher für trockene Plätze, im Herbst Insektenmagnet. Steht im Winter dekorativ.",[
+ ["schnitt","03-01","03-31","Alte Stängel bodennah abschneiden."],
+ ["pflege","05-20","06-10","Chelsea-Chop: um ein Drittel einkürzen, dann kippt sie nicht auseinander."],
+ ["teilen","04-01","04-30","Alle 3–4 Jahre teilen."]]),
+P("taglilie","Taglilie","Hemerocallis","Stauden","B","Sonne",2,"voll winterhart","Robust und langlebig, jede Blüte hält nur einen Tag.",[
+ ["pflege","07-01","08-31","Verblühte Stiele bodennah entfernen."],
+ ["teilen","08-20","09-20","Alle 5 Jahre teilen, Laub auf 15 cm einkürzen."],
+ ["duengen","04-01","05-15","Kompost genügt."]]),
+P("herbstanemone","Herbstanemone","Anemone hupehensis","Stauden","B","Halbschatten",2,"winterhart, jung schützen","Blüht von August bis Oktober, breitet sich mit Ausläufern aus.",[
+ ["schnitt","02-20","03-31","Abgestorbenes Laub im Frühjahr entfernen."],
+ ["schutz","11-01","11-30","Im ersten Winter mit Laub abdecken."]]),
+P("christrose","Christrose","Helleborus niger","Stauden","B","Halbschatten",2,"voll winterhart","Winterblüher, giftig, liebt Kalk und ungestörten Standort.",[
+ ["pflege","12-01","01-31","Alte, fleckige Blätter abschneiden, damit die Blüten frei stehen und Schwarzfleckenkrankheit sich nicht ausbreitet."],
+ ["duengen","03-15","04-15","Kompost und etwas Kalk."]]),
+P("chinaschilf","Chinaschilf","Miscanthus sinensis","Gräser","L","Sonne",2,"voll winterhart","Strukturgras mit Winteraspekt. Halme stehen bis zum Frühjahr.",[
+ ["schutz","11-01","11-30","Halme locker zusammenbinden. Schützt das Herz vor Nässe."],
+ ["schnitt","03-01","04-10","Vor dem Neuaustrieb bodennah auf 10–15 cm zurückschneiden (Handschuhe, Blätter sind scharf)."],
+ ["teilen","04-15","05-31","Bei Bedarf teilen, Gräser erst bei Wärme umsetzen."]]),
+P("pampasgras","Pampasgras","Cortaderia selloana","Gräser","L","Sonne",1,"bedingt winterhart","Imposant, aber nässeempfindlich. Wasser im Herz führt zu Fäulnis.",[
+ ["schutz","10-25","11-20","Blätter zu einem Schopf zusammenbinden, Basis mit Laub bedecken."],
+ ["schnitt","04-01","04-30","Alte Halme herausschneiden, wenn kein Frost mehr droht."]]),
+P("lampenputzergras","Lampenputzergras","Pennisetum alopecuroides","Gräser","L","Sonne",2,"winterhart","Kompaktes Gras mit flauschigen Ähren, schön im Herbst.",[
+ ["schnitt","03-15","04-15","Bodennah zurückschneiden, sobald Neuaustrieb sichtbar ist."],
+ ["schutz","11-01","11-30","Halme stehen lassen, nicht zurückschneiden."]]),
+P("tulpe","Tulpen","Tulipa","Zwiebeln & Knollen","W","Sonne",1,"winterhart","Brauchen kalten Winter für die Blüte. Mäuse lieben sie: in Wühlmausgebieten Pflanzkörbe verwenden.",[
+ ["pflanzen","10-01","11-20","15–20 cm tief setzen (dreifache Zwiebelhöhe), Spitze nach oben, in Tuffs zu 10–15 Stück."],
+ ["duengen","03-01","03-31","Beim Austrieb etwas Kompost oder Zwiebelblumendünger."],
+ ["pflege","05-01","06-15","Verblühtes abschneiden, Laub einziehen lassen, bis es gelb ist. Erst dann entfernen."]]),
+P("narzisse","Narzissen","Narcissus","Zwiebeln & Knollen","W","Sonne",2,"voll winterhart","Verwildern gut, werden von Wühlmäusen gemieden.",[
+ ["pflanzen","09-01","10-31","10–15 cm tief setzen, möglichst bis Ende Oktober, damit sie noch einwurzeln."],
+ ["pflege","04-20","06-10","Samenstände abknipsen, Laub mindestens 6 Wochen stehen lassen."],
+ ["teilen","06-15","07-31","Bei nachlassender Blüte Horste ausgraben, teilen, sofort neu setzen."]]),
+P("krokus","Krokusse","Crocus","Zwiebeln & Knollen","W","Sonne",1,"voll winterhart","Frühe Bienenweide, gut im Rasen zum Verwildern. Rasen erst mähen, wenn das Laub eingezogen ist.",[
+ ["pflanzen","09-15","11-15","5–8 cm tief in Gruppen stecken, im Rasen mit einem Pflanzstab."]]),
+P("allium","Zierlauch","Allium (Zierlauch)","Zwiebeln & Knollen","W","Sonne",1,"winterhart","Kugelblüten im Frühsommer, Samenstände bleiben lange dekorativ.",[
+ ["pflanzen","09-15","10-31","15–20 cm tief setzen, durchlässiger Boden."],
+ ["pflege","07-01","08-31","Laub einziehen lassen, Samenstände nach Wunsch stehen lassen."]]),
+P("dahlie","Dahlien","Dahlia","Zwiebeln & Knollen","B","Sonne",3,"nicht winterhart","Knollen müssen frostfrei überwintern. Blühen von Juli bis zum Frost, Starkzehrer.",[
+ ["auspflanzen","05-15","06-10","Nach den Eisheiligen Knollen 5–10 cm tief setzen, Stütze gleich mit einstecken."],
+ ["duengen","06-15","08-15","Alle 3 Wochen Blühdünger, kaliumbetont."],
+ ["pflege","07-01","10-15","Verblühtes laufend abschneiden, Schnecken kontrollieren."],
+ ["schutz","10-20","11-15","Nach dem ersten Frost Stängel auf 10 cm kürzen, Knollen ausgraben, abtrocknen lassen und bei 5–8 °C luftig und dunkel lagern."]]),
+P("rosmarin","Rosmarin","Salvia rosmarinus","Kräuter","L","Sonne",1,"bedingt winterhart","Mediterran: Sonne, Wärme, magerer Boden. Im Kübel sicherer zu überwintern.",[
+ ["schnitt","04-15","05-31","Nach der Blüte leicht in Form schneiden, nicht ins alte Holz."],
+ ["ernte","05-01","09-30","Triebspitzen ernten, das hält ihn buschig."],
+ ["schutz","10-20","11-20","Kübel hell und frostfrei bei 5–10 °C überwintern. Im Beet: Vlies und Reisig, geschützter Platz an der Hauswand."]]),
+P("salbei","Salbei","Salvia officinalis","Kräuter","L","Sonne",1,"winterhart","Halbstrauch, verholzt mit den Jahren. Rückschnitt hält ihn jung.",[
+ ["schnitt","04-01","04-30","Um ein Drittel einkürzen, immer über beblätterten Abschnitten."],
+ ["ernte","05-15","09-30","Blätter vor der Blüte ernten, dann ist das Aroma am stärksten."]]),
+P("thymian","Thymian","Thymus vulgaris","Kräuter","L","Sonne",1,"winterhart","Bodendeckend bis halbstrauchig, mag Kalk und Trockenheit.",[
+ ["schnitt","04-01","04-30","Um ein Drittel zurückschneiden."],
+ ["ernte","05-15","09-15","Triebspitzen laufend ernten, vor der Blüte am würzigsten."]]),
+P("schnittlauch","Schnittlauch","Allium schoenoprasum","Kräuter","L","Halbschatten",2,"voll winterhart","Ausdauernd, treibt nach jedem Schnitt neu.",[
+ ["teilen","03-15","04-30","Alle 3 Jahre Horst teilen, verjüngt die Pflanze."],
+ ["ernte","04-01","10-15","Halme 3 cm über dem Boden abschneiden, nicht nur die Spitzen."]]),
+P("minze","Minze","Mentha","Kräuter","L","Halbschatten",3,"voll winterhart","Wuchert stark über Ausläufer. Am besten mit Wurzelsperre oder im Topf.",[
+ ["schnitt","06-15","07-15","Vor oder in der Blüte kräftig zurückschneiden, treibt frisch nach."],
+ ["ernte","05-01","09-30","Triebspitzen ernten."]]),
+P("apfelbaum","Apfelbaum","Malus domestica","Obst","F","Sonne",2,"voll winterhart","Der Schnitt bestimmt Ertrag und Gesundheit. Ziel ist eine lichte Krone, in die Sonne fällt.",[
+ ["schnitt","01-15","03-15","Winterschnitt an frostfreien Tagen (nicht unter −5 °C): nach innen wachsende, sich kreuzende und steile Triebe entfernen, Leittriebe einkürzen."],
+ ["duengen","03-15","04-30","Kompost auf die Baumscheibe, Baumscheibe frei von Gras halten."],
+ ["schnitt","07-15","08-15","Sommerschnitt: Wasserschosse (senkrechte Triebe) ausreißen oder abschneiden."],
+ ["ernte","08-20","10-20","Reif, wenn sich der Apfel mit einer Drehung leicht vom Zweig löst und die Kerne braun sind."],
+ ["pflanzen","10-20","11-30","Pflanzloch doppelt so groß wie der Wurzelballen, Pfahl auf der Westseite, Veredelungsstelle über der Erde."]]),
+P("kirschbaum","Süßkirsche","Prunus avium","Obst","F","Sonne",2,"voll winterhart","Wird groß. Wunden heilen im Sommer am besten, daher Schnitt nach der Ernte.",[
+ ["ernte","06-01","07-15","Mit Stiel ernten, wenn die Früchte vollfarbig sind."],
+ ["schnitt","07-15","08-31","Direkt nach der Ernte auslichten: abgetragene und nach innen wachsende Äste entfernen."],
+ ["duengen","03-15","04-15","Kompost auf die Baumscheibe."]]),
+P("zwetschge","Zwetschge","Prunus domestica","Obst","F","Sonne",2,"voll winterhart","Robust, trägt am zwei- bis dreijährigen Holz.",[
+ ["schnitt","07-20","08-31","Nach der Ernte auslichten, Konkurrenztriebe entfernen."],
+ ["ernte","08-15","09-30","Reif, wenn sie am Stielansatz leicht schrumpelig sind."],
+ ["duengen","03-15","04-15","Kompost oder organischer Obstdünger."]]),
+P("himbeere","Himbeeren (Sommer)","Rubus idaeus","Obst","F","Sonne",2,"voll winterhart","Sommersorten tragen an den Ruten des Vorjahres.",[
+ ["ernte","06-20","07-31","Alle 2–3 Tage pflücken, vollreif schmecken sie am besten."],
+ ["schnitt","08-01","08-31","Abgetragene Ruten bodennah abschneiden, pro Meter 8–10 kräftige Jungruten stehen lassen."],
+ ["duengen","03-15","04-15","Beerendünger und Mulch, flach wurzelnd: nicht hacken."]]),
+P("herbsthimbeere","Himbeeren (Herbst)","Rubus idaeus 'Autumn Bliss' u. a.","Obst","F","Sonne",2,"voll winterhart","Tragen am diesjährigen Trieb, praktisch madenfrei.",[
+ ["schnitt","02-01","03-15","Alle Ruten bodennah abschneiden."],
+ ["ernte","08-15","10-15","Laufend pflücken."],
+ ["duengen","03-20","04-30","Beerendünger und Mulch."]]),
+P("johannisbeere","Johannisbeere","Ribes rubrum","Obst","F","Sonne",2,"voll winterhart","Trägt am besten an 1- bis 3-jährigem Holz.",[
+ ["ernte","06-20","07-31","Ganze Rispen abzupfen, wenn alle Beeren gefärbt sind."],
+ ["schnitt","07-20","08-31","Nach der Ernte die ältesten Triebe bodennah entfernen, 8–10 Haupttriebe behalten."],
+ ["duengen","03-15","04-15","Beerendünger, Mulch aus Rasenschnitt."]]),
+P("erdbeere","Erdbeeren","Fragaria × ananassa","Obst","F","Sonne",2,"winterhart","Beet alle 3 Jahre erneuern, der Ertrag lässt dann deutlich nach.",[
+ ["ernte","06-01","07-10","Morgens pflücken, mit Stiel."],
+ ["pflege","07-15","08-31","Nach der Ernte Ausläufer und alte Blätter entfernen, Herz schonen."],
+ ["pflanzen","07-20","08-31","Neue Pflanzen setzen, Herz nicht mit Erde bedecken."],
+ ["duengen","08-01","08-31","Nach der Ernte Beerendünger, legt die Blüten fürs nächste Jahr an."]]),
+P("clematis3","Clematis (Gruppe 3, sommerblühend)","Clematis viticella u. a.","Kletterpflanzen","B","Sonne",2,"voll winterhart","Blüht am neuen Trieb. Fuß beschatten, Kopf in die Sonne.",[
+ ["schnitt","02-20","03-31","Alle Triebe auf 20–40 cm über dem Boden zurückschneiden."],
+ ["duengen","04-01","06-30","Organischer Dünger im April und Juni."],
+ ["pflege","04-15","06-15","Neue Triebe ans Gitter leiten."]]),
+P("clematis1","Clematis (Gruppe 1, frühblühend)","Clematis montana / alpina","Kletterpflanzen","B","Sonne",2,"voll winterhart","Blüht im Frühling am alten Holz. Nur schneiden, wenn sie zu groß wird.",[
+ ["schnitt","05-20","06-30","Direkt nach der Blüte bei Bedarf einkürzen und auslichten."],
+ ["duengen","03-15","04-15","Kompost um den Fuß."]]),
+P("blauregen","Blauregen","Wisteria sinensis","Kletterpflanzen","B","Sonne",2,"winterhart","Sehr wüchsig, braucht stabiles Gerüst. Ohne Schnitt kaum Blüten.",[
+ ["schnitt","07-15","08-20","Sommerschnitt: diesjährige Langtriebe auf 4–6 Blätter kürzen."],
+ ["schnitt","01-15","02-28","Winterschnitt: dieselben Kurztriebe auf 2–3 Knospen kürzen. Dicke Blütenknospen schonen."]]),
+P("efeu","Efeu","Hedera helix","Kletterpflanzen","L","Schatten",2,"voll winterhart","Immergrün, wichtig für Insekten im Herbst. Haftwurzeln können Putz beschädigen.",[
+ ["schnitt","03-15","04-30","Von Fenstern, Dachrinnen und Holz fernhalten, Ränder einkürzen."]]),
+P("geranie","Geranien","Pelargonium","Kübelpflanzen","B","Sonne",2,"nicht winterhart","Balkonklassiker. Lässt sich hell und kühl gut überwintern.",[
+ ["auspflanzen","05-15","06-05","Nach den Eisheiligen ins Freie, Balkonkästen mit frischer Erde."],
+ ["duengen","05-20","08-31","Wöchentlich Flüssigdünger für Balkonpflanzen ins Gießwasser."],
+ ["pflege","06-01","09-30","Verblühtes samt Stiel ausbrechen."],
+ ["schutz","10-05","10-31","Vor dem ersten Frost einräumen, auf ein Drittel zurückschneiden, hell bei 5–10 °C kaum gießen."]]),
+P("oleander","Oleander","Nerium oleander","Kübelpflanzen","B","Sonne",3,"leichter Frost bis ca. −5 °C","Mediterrane Kübelpflanze, giftig. Braucht im Sommer viel Wasser und Dünger.",[
+ ["schnitt","03-01","04-15","Vor dem Ausräumen: einzelne lange oder kahle Triebe bodennah schneiden. Blütenstände nicht abschneiden, sie blühen nach."],
+ ["auspflanzen","04-20","05-20","Ausräumen, wenn keine Fröste unter −3 °C mehr drohen, zuerst in den Halbschatten."],
+ ["duengen","05-01","08-31","Wöchentlich Kübelpflanzendünger, Untersetzer darf Wasser haben."],
+ ["schutz","10-25","11-20","So lange wie möglich draußen lassen, vor Frost unter −5 °C hell und kühl (5–10 °C) einräumen."]]),
+P("olivenbaum","Olivenbaum","Olea europaea","Kübelpflanzen","F","Sonne",1,"leichter Frost bis ca. −5 °C","Robust im Kübel, verträgt Trockenheit besser als Nässe.",[
+ ["schnitt","03-15","04-30","Krone auslichten, nach innen wachsende Zweige entfernen."],
+ ["duengen","04-15","08-15","Alle 2 Wochen Kübelpflanzendünger."],
+ ["schutz","11-01","11-30","Hell und kühl (5–10 °C) überwintern, wenig gießen. In milden Lagen mit Vlies draußen möglich."]]),
+P("petunie","Petunien / Surfinien","Petunia","Kübelpflanzen","B","Sonne",3,"nicht winterhart","Blühen den ganzen Sommer, brauchen Eisenvorrat (sonst gelbe Blätter).",[
+ ["auspflanzen","05-15","06-05","Nach den Eisheiligen pflanzen."],
+ ["duengen","05-25","09-15","Wöchentlich Petunien- oder Balkondünger mit Eisen."],
+ ["schnitt","07-15","08-10","Bei langen, kahlen Trieben um ein Drittel einkürzen, verjüngt die Pflanze."]]),
+P("rasen","Rasen","Poa / Lolium / Festuca","Rasen","L","Sonne",2,"winterhart","Dichter Rasen ist die Folge von regelmäßigem Mähen, ausreichender Nährstoffversorgung und gelegentlichem, tiefem Gießen.",[
+ ["duengen","03-20","04-30","Langzeit-Rasendünger, sobald das Gras wächst."],
+ ["pflege","04-15","05-20","Bei Rasenfilz vertikutieren (Messer nur 2–3 mm tief), Lücken nachsäen."],
+ ["duengen","06-01","06-30","Zweite Düngung im Frühsommer."],
+ ["aussaat","08-20","09-20","Kahle Stellen nachsäen, Saat 1 cm einrechen, 3 Wochen feucht halten."],
+ ["duengen","09-15","10-20","Herbstdünger, kaliumbetont, stärkt gegen Frost und Pilze."],
+ ["pflege","10-20","11-20","Letzter Schnitt auf 4–5 cm, Laub abrechen."]]),
+];
+const CAT=Object.fromEntries(CATALOG.map(c=>[c.id,c]));
+
+/* Glyphen je Kategorie */
+function glyph(cat,size=28){
+  const s=size, a='stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+  const bl='fill="var(--bloom)"', sf='fill="color-mix(in oklab,currentColor 22%,transparent)"';
+  const g={
+    "Rosen":`<circle cx="16" cy="12" r="6.5" ${bl} opacity=".9"/><path d="M13 12a3 3 0 1 1 3 3" stroke="var(--surface)" stroke-width="1.3" fill="none"/><path d="M16 18.5V29M16 24c-3-.5-5-2.5-5.5-5 3 .2 5 2 5.5 5Z" ${a}/>`,
+    "Sträucher":`<circle cx="11" cy="15" r="6" ${sf} ${a}/><circle cx="20" cy="13" r="7" ${sf} ${a}/><circle cx="20" cy="11" r="1.6" ${bl}/><circle cx="12" cy="13" r="1.4" ${bl}/><path d="M16 21v8" ${a}/>`,
+    "Hecken":`<rect x="5" y="9" width="22" height="15" rx="6" ${sf} ${a}/><path d="M9 14h2M15 17h2M21 13h2M12 20h2M20 19h2" ${a}/><path d="M10 24v4M22 24v4" ${a}/>`,
+    "Stauden":`<path d="M10 29c0-8 1-13 3-17M16 29V9M22 29c0-8-1-13-3-17" ${a}/><circle cx="13" cy="10" r="3" ${bl}/><circle cx="16" cy="6.5" r="3" ${bl} opacity=".75"/><circle cx="19.5" cy="10.5" r="3" ${bl} opacity=".9"/>`,
+    "Gräser":`<path d="M16 29C15 20 11 13 5 9M16 29c0-9 1-17 3-24M16 29c1-8 5-14 11-17M16 29c-2-7-5-11-9-13" ${a}/>`,
+    "Zwiebeln & Knollen":`<path d="M16 18v6" ${a}/><path d="M11 6c0 5 2 8 5 8s5-3 5-8l-2.5 2.5L16 5l-2.5 3.5L11 6Z" ${bl}/><path d="M12 24c0 3 2 5 4 5s4-2 4-5-2-2-4-2-4-1-4 2Z" ${sf} ${a}/><path d="M16 18c-3-1-5-3-6-6M16 18c3-1 5-3 6-6" ${a}/>`,
+    "Kräuter":`<path d="M16 29V5" ${a}/><path d="M16 9c-3 0-5-1.5-6-4 3 0 5 1.5 6 4Zm0 0c3 0 5-1.5 6-4-3 0-5 1.5-6 4Zm0 7c-3.5 0-6-2-7-5 3.5 0 6 2 7 5Zm0 0c3.5 0 6-2 7-5-3.5 0-6 2-7 5Zm0 7c-4 0-6.5-2-7.5-5 4 0 6.5 2 7.5 5Zm0 0c4 0 6.5-2 7.5-5-4 0-6.5 2-7.5 5Z" ${sf} ${a}/>`,
+    "Obst":`<circle cx="16" cy="19" r="8" fill="var(--el-F)" opacity=".85"/><path d="M16 11V6M16 9c2-3 5-3.5 7-3-1 3-4 4-7 3Z" ${a}/>`,
+    "Kletterpflanzen":`<path d="M16 29c0-5 6-6 6-11s-6-5-6-10 4-5 4-5" ${a}/><path d="M19 22c2.5 0 4.5 1 5 3-2.5.5-4.5-.5-5-3Zm-3-9c-2.5 0-4.5 1-5 3 2.5.5 4.5-.5 5-3Z" ${sf} ${a}/><circle cx="21" cy="11" r="2" ${bl}/>`,
+    "Kübelpflanzen":`<path d="M9 19h14l-2 10H11l-2-10Z" ${sf} ${a}/><path d="M16 19V11M16 13c-3 0-5-2-5.5-4.5 3 0 5 2 5.5 4.5Zm0-2c2.5 0 4.5-1.8 5-4-2.7 0-4.5 1.8-5 4Z" ${a}/><circle cx="16" cy="7" r="2.3" ${bl}/>`,
+    "Rasen":`<path d="M4 27h24" ${a}/><path d="M6 27l1-7 1 7M10 27l1.5-9 1.5 9M15 27l1-6 1 6M19 27l1.5-8 1.5 8M24 27l1-6 1 6" ${a}/>`,
+  }[cat]||"";
+  return `<svg width="${s}" height="${s}" viewBox="0 0 32 32" aria-hidden="true">${g}</svg>`;
+}
+const SPRIG=`<svg viewBox="0 0 170 150" fill="none" aria-hidden="true"><path d="M10 145C40 100 70 70 150 30" stroke="currentColor" stroke-width="1.5"/><path d="M48 104c-12-14-12-30-2-42 10 13 10 29 2 42Zm22-26c-6-16-1-31 12-40 6 15 2 30-12 40Zm26-20c-2-15 6-28 20-33 2 15-6 27-20 33ZM40 114c-18 0-30-9-34-22 17-1 29 8 34 22Zm24-28c-17-3-27-14-28-28 16 2 26 13 28 28Zm28-22c-15-6-22-18-20-31 15 5 22 17 20 31Z" fill="currentColor" opacity=".55"/></svg>`;
+
+/* Monats-Tipps */
+const TIPS={1:["Schnee von Hecken und Immergrünen abschütteln, damit Äste nicht brechen.","Immergrüne an frostfreien Tagen gießen, wenn der Boden trocken ist."],
+2:["Obstbaum-Winterschnitt an frostfreien Tagen abschließen.","Scheren schärfen und desinfizieren, bevor die Schnittsaison startet."],
+3:["Faustregel: Wenn die Forsythie blüht, werden Rosen geschnitten.","Stauden und Gräser zurückschneiden, sobald Neuaustrieb zu sehen ist."],
+4:["Rosen-Anhäufelung abtragen.","Schneckenkontrolle beginnen, abends absammeln wirkt am besten."],
+5:["Frostempfindliches erst nach den Eisheiligen (11.–15. Mai) ins Freie.","Vlies griffbereit halten, Spätfrost ist bis Mitte Mai möglich."],
+6:["Hecken nach Johanni (24. Juni) schneiden, vorher auf Vogelnester prüfen.","Lieber selten und durchdringend gießen als täglich ein bisschen, am besten morgens."],
+7:["Ab Mitte Juli keinen Stickstoff mehr für Gehölze und Rosen.","Kübel bei Hitze täglich prüfen."],
+8:["Erdbeeren neu setzen, Ausläufer abtrennen.","Frühlingszwiebeln bestellen, Pflanzzeit beginnt im September."],
+9:["Rasen nachsäen und mit Herbstdünger versorgen.","Narzissen und Krokusse setzen."],
+10:["Kübelpflanzen vor dem ersten Frost einräumen, empfindliche zuerst.","Laub unter Sträuchern liegen lassen: Winterschutz und Lebensraum für Nützlinge."],
+11:["Rosen anhäufeln, Gräser zusammenbinden.","Außenwasserhähne entleeren und absperren."],
+12:["Kübel im Winterquartier kontrollieren, mäßig gießen, auf Schädlinge achten.","Samenstände stehen lassen: Futter für Vögel."]};
+
+/* ---------- Zustand und Speicher (Supabase) ---------- */
+const S={zones:[],plantings:[],done:{},members:[],ready:{zones:false,plantings:false}};
+let sb=null, booted=false;
+let me={id:null,email:"",role:null,canZones:false,canPlants:false,local:false};
+const ROLES={
+  admin:{n:"Verwalter",d:"Darf alles: Zonen, Pflanzen, Aufgaben und die Mitgliederliste verwalten."},
+  gardener:{n:"Gärtner",d:"Darf Pflanzen in bestehende Zonen setzen, ändern, löschen und Aufgaben abhaken. Zonen nur ansehen."},
+  read:{n:"Gast",d:"Sieht Plan, Zonen und Pflanzen, kann nichts ändern."}};
+const MAP={
+  zones:{to:d=>({name:d.name,kind:d.kind,light:d.light,color:d.color,note:d.note,ord:d.order}),
+         from:r=>({id:r.id,name:r.name,kind:r.kind,light:r.light,color:r.color,note:r.note,order:r.ord})},
+  plantings:{to:d=>({zone_id:d.zoneId,cat:d.cat,count:d.count,status:d.status,note:d.note,added:d.added}),
+             from:r=>({id:r.id,zoneId:r.zone_id,cat:r.cat,count:r.count,status:r.status,note:r.note,added:r.added})},
+  done:{to:d=>({pid:d.pid,tid:d.tid,y:d.y,date:d.date,skipped:d.skipped}),
+        from:r=>({id:r.id,pid:r.pid,tid:r.tid,y:r.y,date:r.date,skipped:r.skipped})},
+  members:{to:d=>({role:d.role}),from:r=>({id:r.email,email:r.email,role:r.role,seen:r.last_seen})}};
+const PK=col=>col==="members"?"email":"id";
+const clean=o=>Object.fromEntries(Object.entries(o).filter(([,v])=>v!==undefined));
+const api={
+  async set(col,id,data){const row=clean(MAP[col].to(data));row[PK(col)]=id;
+    const {error}=await sb.from(col).upsert(row);if(error)throw error;await load(col)},
+  async update(col,id,patch){const {data,error}=await sb.from(col).update(clean(MAP[col].to(patch))).eq(PK(col),id).select();
+    if(error)throw error;if(!data||!data.length)throw {code:"rls"};await load(col)},
+  async del(col,id){const {data,error}=await sb.from(col).delete().eq(PK(col),id).select();
+    if(error)throw error;if(!data||!data.length)throw {code:"rls"};await load(col)}};
+async function load(col){
+  const {data,error}=await sb.from(col).select("*");
+  if(error){console.warn(col,error);return}
+  apply(col,data.map(MAP[col].from));
+}
+const loadAll=()=>Promise.all(["zones","plantings","done","members"].map(load));
+function apply(col,rows){
+  if(col==="zones"){S.zones=rows.sort((a,b)=>(a.order||0)-(b.order||0)||String(a.name).localeCompare(b.name));S.ready.zones=true}
+  else if(col==="plantings"){S.plantings=rows;S.ready.plantings=true}
+  else if(col==="done"){S.done=Object.fromEntries(rows.map(r=>[r.id,r]))}
+  else if(col==="members"){S.members=rows.sort((a,b)=>a.email.localeCompare(b.email))}
+  if(booted) render();
+}
+async function guard(p,okMsg){
+  try{await p; if(okMsg) toast(okMsg); return true}
+  catch(e){
+    const c=e&&e.code;
+    toast(c==="42501"||c==="rls"?"Dafür fehlt dir die Berechtigung.":c==="23505"?"Diesen Eintrag gibt es schon.":"Speichern hat nicht geklappt. Prüfe die Verbindung und versuche es nochmal.");
+    return false}
+}
+
+/* ---------- UI-Zustand ---------- */
+const UI={tab:"plan",range:LS.get("range","30"),from:dkey(TODAY),to:dkey(addD(TODAY,30)),zoneF:"all",typeF:"all",open:new Set(),zone:null,catQ:"",catC:"Alle",calM:new Date(TODAY.getFullYear(),TODAY.getMonth(),1),calSel:dkey(TODAY)};
+const TABS=[
+  ["plan","Plan",'<path d="M5 6h14v14H5zM5 10h14M9 3v4M15 3v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><path d="M9 14.5l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>'],
+  ["zonen","Zonen",'<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 13c0-2.5 1.5-4 3.5-4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'],
+  ["katalog","Katalog",'<path d="M5 4.5h9a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3V4.5Z M17 7.5h2V20h-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M11 15c0-3 1.5-5 4-5.5 0 2.8-1.5 4.8-4 5.5Zm0 0c-2-.2-3-1.4-3.3-3 2 .1 3 1.2 3.3 3Z" fill="currentColor"/>'],
+  ["mond","Mond",'<path d="M15 4a8 8 0 1 0 5 13.8A7 7 0 0 1 15 4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>'],
+  ["team","Team",'<circle cx="9" cy="9" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.5" cy="10" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 19c.7-3 3-4.6 5.5-4.6s4.8 1.6 5.5 4.6M14.5 15c2.8-.4 5 .9 6 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'],
+];
+function nav(){
+  const h=TABS.map(([id,l,i])=>`<button data-tab="${id}" ${UI.tab===id?'aria-current="page"':""}><svg viewBox="0 0 24 24" aria-hidden="true">${i}</svg><span>${l}</span></button>`).join("");
+  $("#bottomnav").innerHTML=h;
+  $("#topnav").innerHTML=TABS.map(([id,l])=>`<button data-tab="${id}" ${UI.tab===id?'aria-current="page"':""}>${l}</button>`).join("");
+}
+function go(tab){UI.tab=tab;LS.set("tab",tab);if(tab!=="zonen")UI.zone=null;render();window.scrollTo({top:0})}
+
+/* ---------- Plan berechnen ---------- */
+function rangeDates(){
+  if(UI.range==="custom"){let f=pkey(UI.from),t=pkey(UI.to);if(t<f)[f,t]=[t,f];if((t-f)/DAY>366)t=addD(f,366);return [f,t]}
+  return [TODAY,addD(TODAY,Number(UI.range))];
+}
+function windowsFor(task,rs,re){
+  const [ , f, t]=task; const [fm,fd]=f.split("-").map(Number), [tm,td]=t.split("-").map(Number); const out=[];
+  for(let y=rs.getFullYear()-1;y<=re.getFullYear();y++){
+    const from=new Date(y,fm-1,fd); let to=new Date(y,tm-1,td); if(to<from) to=new Date(y+1,tm-1,td);
+    if(to>=rs&&from<=re) out.push({from,to,y});
+  }
+  return out;
+}
+function buildPlan(){
+  const [rs,re]=rangeDates(); const items=[];
+  const zmap=Object.fromEntries(S.zones.map(z=>[z.id,z]));
+  for(const p of S.plantings){
+    const c=CAT[p.cat]; if(!c) continue; const z=zmap[p.zoneId]; if(!z) continue;
+    if(UI.zoneF!=="all"&&p.zoneId!==UI.zoneF) continue;
+    const planned=p.status==="geplant";
+    c.t.forEach(task=>{
+      const [type,f,,txt]=task;
+      if(type==="pflanzen"&&!planned) return;
+      if(planned&&!["pflanzen","auspflanzen"].includes(type)) return;
+      if(UI.typeF!=="all"&&groupOf(type)!==UI.typeF) return;
+      for(const w of windowsFor(task,rs,re)){
+        const s=w.from>rs?w.from:rs, e=w.to<re?w.to:re;
+        const cands=[];
+        for(let d=sod(s);d<=e;d=addD(d,1)){const m=moon(d);const sc=scoreDay(type,m,c.e);cands.push({d,m,...sc})}
+        if(!cands.length) continue;
+        const sorted=[...cands].sort((a,b)=>b.s-a.s||a.d-b.d);
+        const best=sorted[0]; const alts=[];
+        for(const x of sorted.slice(1)){ if(alts.length>=2) break; if(x.s<best.s-1) break; if([best,...alts].every(o=>Math.abs(o.d-x.d)>=3*DAY)) alts.push(x)}
+        const tid=`${type}-${f}`, dk=`${p.id}~${tid}~${w.y}`;
+        items.push({p,c,z,type,txt,tid,dk,best,alts,win:w,done:S.done[dk]||null,qual:quality(type,best.s)});
+      }
+    });
+  }
+  items.sort((a,b)=>a.best.d-b.best.d||a.z.name.localeCompare(b.z.name));
+  return {items,rs,re};
+}
+const groupOf=t=>({auspflanzen:"pflanzen",teilen:"pflanzen",aussaat:"ernte"}[t]||t);
+
+/* ---------- Render ---------- */
+function render(){
+  nav();
+  const v=$("#view");
+  const views={plan:vPlan,zonen:vZonen,katalog:vKatalog,mond:vMond,team:vTeam};
+  v.innerHTML=(views[UI.tab]||vPlan)();
+  if(UI.tab==="katalog") renderCatList();
+  renderMe();
+}
+function renderMe(){
+  const el=$("#mechip"); if(!me.role){el.hidden=true;return}
+  el.hidden=false;
+  el.innerHTML=`<span class="ini">${esc((me.email||"?").slice(0,1).toUpperCase())}</span><span>${esc(ROLES[me.role].n)}</span>`;
+}
+function hero(){
+  const m=moon(TODAY), el=EL[m.el];
+  const gf=goodFor(m);
+  return `<section class="hero" style="--el:var(${el.v})">
+    <div class="sprig">${SPRIG}</div>
+    <div class="hero-text">
+      <div class="eyebrow">${esc(fLong(TODAY))}</div>
+      <h2>Heute ist <em>${el.n}</em>.</h2>
+      <div class="sub">${esc(m.phase)} · ${m.asc?"aufsteigend":"absteigend"} · Mond in ${esc(m.sign)} · ${Math.round(m.illum*100)} % beleuchtet</div>
+      <div class="chips">${gf.map(g=>`<span class="chip good">${esc(g)}</span>`).join("")}</div>
+    </div>
+    <div class="hero-moon">${moonSVG(m,92)}</div>
+  </section>`;
+}
+function strip(rs,re){
+  const days=[]; const end=addD(rs,Math.min(30,Math.round((re-rs)/DAY)));
+  for(let d=rs;d<=end;d=addD(d,1)){const m=moon(d);days.push(`<div class="sd ${dkey(d)===dkey(TODAY)?"today":""}" style="--el:var(${EL[m.el].v})" title="${esc(fLong(d))}: ${esc(m.phase)}, ${EL[m.el].n}, ${m.asc?"aufsteigend":"absteigend"}"><span class="muted">${fmt(d,{weekday:"short"}).slice(0,2)}</span><b class="num">${d.getDate()}</b>${moonSVG(m,16)}<i></i><span class="ar">${m.asc?"↑":"↓"}</span></div>`)}
+  return `<div class="strip" aria-label="Mondtage im Zeitraum">${days.join("")}</div>`;
+}
+function vPlan(){
+  const {items,rs,re}=buildPlan();
+  const open=items.filter(i=>!i.done), done=items.filter(i=>i.done);
+  const rangeBtns=[["7","7 Tage"],["14","14 Tage"],["30","Monat"],["90","3 Monate"],["custom","Zeitraum"]].map(([v,l])=>`<button data-range="${v}" aria-pressed="${UI.range===v}">${l}</button>`).join("");
+  const zf=[`<button class="fchip" data-zf="all" aria-pressed="${UI.zoneF==="all"}">Alle Zonen</button>`,...S.zones.map(z=>`<button class="fchip" data-zf="${esc(z.id)}" aria-pressed="${UI.zoneF===z.id}" style="--c:${esc(z.color||"var(--accent)")}"><span class="dot"></span>${esc(z.name)}</button>`)].join("");
+  const tf=[["all","Alle Arbeiten"],["schnitt","Rückschnitt"],["duengen","Düngen"],["pflanzen","Pflanzen"],["pflege","Pflege"],["schutz","Winterschutz"],["ernte","Ernte & Saat"]].map(([v,l])=>`<button class="fchip" data-tf="${v}" aria-pressed="${UI.typeF===v}" ${v!=="all"?`style="--c:var(${TT[v].c})"`:""}>${v!=="all"?'<span class="dot"></span>':""}${l}</button>`).join("");
+
+  let list="";
+  if(!S.plantings.length){
+    list=`<div class="empty">${glyph("Stauden",44)}<h3>Noch keine Pflanzen im Garten</h3><p>Lege eine Zone an (zum Beispiel „Rosenbeet Süd“) und setze Pflanzen aus dem Katalog hinein. Danach erscheint hier euer Pflegeplan mit den passenden Mondtagen.</p><button class="btn primary" data-go="zonen">Zu den Zonen</button></div>`;
+  } else if(!open.length){
+    list=`<div class="empty">${glyph("Gräser",44)}<h3>Nichts zu tun in diesem Zeitraum</h3><p>Für eure Pflanzen steht hier gerade keine Arbeit an. Wähle einen längeren Zeitraum, um vorauszuschauen.</p><button class="btn" data-range="90">3 Monate anzeigen</button></div>`;
+  } else {
+    const groups=new Map();
+    for(const it of open){const mk=dkey(monday(it.best.d));if(!groups.has(mk))groups.set(mk,[]);groups.get(mk).push(it)}
+    const thisMon=dkey(monday(TODAY)), nextMon=dkey(addD(monday(TODAY),7));
+    for(const [mk,arr] of groups){
+      const mon=pkey(mk), sun=addD(mon,6);
+      const label=mk===thisMon?"Diese Woche":mk===nextMon?"Nächste Woche":`KW ${isoWeek(mon)}`;
+      list+=`<div class="week"><div class="week-h"><h3>${label}</h3><span class="muted num">${fShort(mon)} – ${fShort(sun)} · ${arr.length} ${arr.length===1?"Arbeit":"Arbeiten"}</span></div><div class="tasks">${arr.map(taskCard).join("")}</div></div>`;
+    }
+    if(done.length) list+=`<details class="donebox"><summary>Erledigt oder ausgelassen (${done.length})</summary><div class="tasks" style="margin-top:10px">${done.map(taskCard).join("")}</div></details>`;
+  }
+  const months=new Set(); for(let d=new Date(rs.getFullYear(),rs.getMonth(),1);d<=re;d=new Date(d.getFullYear(),d.getMonth()+1,1)) months.add(d.getMonth()+1);
+  const tips=[...months].slice(0,3).map(mn=>`<div class="tip"><div class="eyebrow">${MONTHS[mn-1]}</div><h3>Im Garten allgemein</h3><ul>${TIPS[mn].map(t=>`<li>${esc(t)}</li>`).join("")}</ul></div>`).join("");
+
+  return `${hero()}
+  <section class="block">
+    <div class="block-head"><h2>Pflegeplan</h2><span class="muted num">${fShort(rs)} – ${fmt(re,{day:"numeric",month:"short",year:"numeric"})}</span></div>
+    <div class="seg" role="group" aria-label="Zeitraum">${rangeBtns}</div>
+    ${UI.range==="custom"?`<div class="custom-range"><label for="rfrom" class="muted">Von</label><input type="date" id="rfrom" value="${UI.from}"><label for="rto" class="muted">bis</label><input type="date" id="rto" value="${UI.to}"></div>`:""}
+    ${S.zones.length>1?`<div class="filters">${zf}</div>`:""}
+    <div class="filters">${tf}</div>
+    ${strip(rs,re)}
+    ${list}
+  </section>
+  <section class="block"><div class="block-head"><h2>Saison-Hinweise</h2></div><div class="tips">${tips}</div></section>`;
+}
+function taskCard(it){
+  const t=TT[it.type], el=EL[it.best.m.el], open=UI.open.has(it.dk);
+  const d=it.best.d;
+  const doneTxt=it.done?(it.done.skipped?"Ausgelassen":"Erledigt am "+fShort(pkey(it.done.date))):"";
+  const why=it.best.r.length?`Warum dieser Tag: ${it.best.r.join(", ")}.`:"Im Zeitfenster gibt es keinen besonders günstigen Mondtag, der früheste Termin ist gesetzt.";
+  return `<article class="task ${open?"open":""} ${it.done?"isdone":""}">
+    <div class="dayb" style="--el:var(${el.v})" title="${el.n}"><small>${fmt(d,{weekday:"short"})}</small><b class="num">${d.getDate()}</b><small>${MONTHS[d.getMonth()]}</small><span class="el"></span></div>
+    <div class="tmain">
+      <span class="ttype" style="--c:var(${t.c})">${icon(t.i)}${t.l}</span>
+      <div class="tname">${esc(it.c.n)}${it.p.count>1?` <span class="muted">× ${it.p.count}</span>`:""}</div>
+      <div class="tzone">${esc(it.z.name)}${it.p.note?` · ${esc(it.p.note)}`:""}</div>
+      ${it.done?`<div class="why">${doneTxt}</div>`:`
+      <div class="tmeta"><span class="q ${it.qual[0]}">${it.qual[1]}</span><span class="chip"><span class="dot" style="--c:var(${el.v})"></span>${el.n}</span>${it.p.status==="geplant"?'<span class="badge">geplant</span>':""}</div>
+      ${open?`<div class="tbody">${esc(it.txt)}</div>
+        <div class="why">${esc(why)}</div>
+        ${it.alts.length?`<div class="why">Ausweichtage: ${it.alts.map(a=>esc(fmt(a.d,{weekday:"short",day:"numeric",month:"short"}))).join(" · ")}</div>`:""}
+        <div class="why">Gärtnerisches Zeitfenster: ${fShort(it.win.from)} – ${fShort(it.win.to)}. Bei Frost, Nässe oder Hitze lieber verschieben.</div>`:""}
+      <button class="linkbtn" data-toggle="${esc(it.dk)}" style="margin-top:6px">${open?"Weniger":"So geht's"}</button>`}
+    </div>
+    <div class="tact">
+      ${it.done?(me.canPlants?`<button class="iconbtn" data-undo="${esc(it.dk)}" title="Zurücksetzen" aria-label="Zurücksetzen"><svg viewBox="0 0 24 24"><path d="M5 9h10a4 4 0 0 1 0 8H9M5 9l4-4M5 9l4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`:"")
+      :(me.canPlants?`<button class="iconbtn check" data-done="${esc(it.dk)}" title="Erledigt" aria-label="Als erledigt markieren"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="iconbtn" data-skip="${esc(it.dk)}" title="Diesmal auslassen" aria-label="Diesmal auslassen"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>`:"")}
+    </div>
+  </article>`;
+}
+
+/* Zonen */
+const ZCOLORS=["#3B7547","#954F74","#A8731C","#4A6884","#7A5636"];
+function vZonen(){
+  if(UI.zone){const z=S.zones.find(x=>x.id===UI.zone); if(z) return vZone(z); UI.zone=null}
+  const cnt=id=>S.plantings.filter(p=>p.zoneId===id).reduce((a,p)=>a+(p.count||1),0);
+  const cards=S.zones.map(z=>{
+    const ps=S.plantings.filter(p=>p.zoneId===z.id);
+    const cats=[...new Set(ps.map(p=>CAT[p.cat]?.c).filter(Boolean))].slice(0,6);
+    return `<button class="zone" data-zone="${esc(z.id)}" style="--zc:${esc(z.color||"var(--accent)")}">
+      <div class="eyebrow">${esc(z.kind||"Zone")}</div>
+      <h3>${esc(z.name)}</h3>
+      <div class="glyphs">${cats.length?cats.map(c=>glyph(c,28)).join(""):'<span class="muted" style="font-size:13px">Noch leer</span>'}</div>
+      <div class="meta"><span class="chip">${esc(z.light||"Sonne")}</span><span class="chip num">${cnt(z.id)} ${cnt(z.id)===1?"Pflanze":"Pflanzen"}</span></div>
+    </button>`}).join("");
+  return `<section class="block" style="margin-top:6px">
+    <div class="block-head"><h2>Zonen</h2><span class="muted">Orte im Garten, denen ihr Pflanzen zuordnet.</span><span class="spacer"></span>
+      ${me.canZones?`<button class="btn primary" data-newzone>${plus()}Neue Zone</button>`:""}</div>
+    ${!S.ready.zones&&!me.local?`<p class="muted">Lade Zonen …</p>`:S.zones.length?`<div class="zones">${cards}</div>`:
+      `<div class="empty">${glyph("Sträucher",44)}<h3>Legt eure erste Zone an</h3><p>Zum Beispiel „Vorgarten“, „Terrasse Kübel“ oder „Hecke Nord“. Lage und Art helfen später bei der Einordnung.</p>${me.canZones?`<button class="btn primary" data-newzone>${plus()}Erste Zone anlegen</button>`:`<p class="muted">Zonen anlegen dürfen Besitzer und Verwalter.</p>`}</div>`}
+  </section>`;
+}
+const plus=()=>`<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+function vZone(z){
+  const ps=S.plantings.filter(p=>p.zoneId===z.id).sort((a,b)=>(CAT[a.cat]?.n||"").localeCompare(CAT[b.cat]?.n||""));
+  const rows=ps.map(p=>{const c=CAT[p.cat];if(!c)return"";return `<div class="pl">
+    <div class="g">${glyph(c.c,34)}</div>
+    <div style="min-width:0"><div class="pn">${esc(c.n)}${p.count>1?` <span class="muted num">× ${p.count}</span>`:""} ${p.status==="geplant"?'<span class="badge">geplant</span>':""}</div><div class="pb">${esc(c.b)}</div>${p.note?`<div class="pnote">${esc(p.note)}</div>`:""}</div>
+    <div class="row" style="gap:6px"><button class="iconbtn" data-info="${esc(c.id)}" aria-label="Steckbrief"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5M12 8v.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    ${me.canPlants?`<button class="iconbtn" data-editp="${esc(p.id)}" aria-label="Bearbeiten"><svg viewBox="0 0 24 24"><path d="M5 19h3.5L18 9.5 14.5 6 5 15.5V19ZM13 7.5l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>`:""}</div>
+  </div>`}).join("");
+  return `<section class="block" style="margin-top:4px">
+    <button class="back" data-back><svg width="16" height="16" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Alle Zonen</button>
+    <div class="zone-detail-head" style="--zc:${esc(z.color||"var(--accent)")}"><span class="zdot"></span><div style="min-width:0;flex:1"><div class="eyebrow">${esc(z.kind||"Zone")} · ${esc(z.light||"Sonne")}</div><h2 style="font-size:30px">${esc(z.name)}</h2>${z.note?`<p class="muted" style="margin:4px 0 0;max-width:60ch">${esc(z.note)}</p>`:""}</div>
+      <div class="row">${me.canZones?`<button class="btn" data-editzone="${esc(z.id)}">Zone bearbeiten</button>`:""}${me.canPlants?`<button class="btn primary" data-addplant="${esc(z.id)}">${plus()}Pflanze</button>`:""}</div></div>
+    ${ps.length?`<div class="plist">${rows}</div>`:`<div class="empty" style="margin-top:16px">${glyph("Kübelpflanzen",44)}<h3>Hier wächst noch nichts</h3><p>Wählt Pflanzen aus dem Katalog. Pflegezeiten und Mondtage kommen automatisch dazu.</p>${me.canPlants?`<button class="btn primary" data-addplant="${esc(z.id)}">${plus()}Pflanze aus dem Katalog</button>`:""}</div>`}
+  </section>`;
+}
+
+/* Katalog */
+function vKatalog(){
+  return `<section class="block" style="margin-top:6px">
+    <div class="block-head"><h2>Pflanzenkatalog</h2><span class="muted">${CATALOG.length} Gartenpflanzen mit Pflegeplan</span></div>
+    <div class="searchbar"><input type="search" id="catq" placeholder="Suchen, z. B. Hortensie oder Lavandula" value="${esc(UI.catQ)}" aria-label="Katalog durchsuchen"></div>
+    <div class="filters">${["Alle",...CATS].map(c=>`<button class="fchip" data-cat="${esc(c)}" aria-pressed="${UI.catC===c}">${esc(c)}</button>`).join("")}</div>
+    <div id="catlist"></div>
+  </section>`;
+}
+function catFilter(q,cat){
+  q=(q||"").trim().toLowerCase();
+  return CATALOG.filter(c=>(cat==="Alle"||c.c===cat)&&(!q||(c.n+" "+c.b+" "+c.c).toLowerCase().includes(q)));
+}
+const water=w=>["","wenig Wasser","mittel Wasser","viel Wasser"][w];
+function renderCatList(){
+  const el=$("#catlist"); if(!el) return;
+  const list=catFilter(UI.catQ,UI.catC);
+  el.innerHTML=list.length?`<div class="cat-grid">${list.map(c=>`<button class="pc" data-info="${c.id}"><div class="g">${glyph(c.c,32)}</div><div style="min-width:0"><div class="pn">${esc(c.n)}</div><div class="pb">${esc(c.b)}</div><div class="icons"><span>${esc(c.l)}</span><span>${water(c.w)}</span></div></div></button>`).join("")}</div>`:`<p class="muted" style="margin-top:14px">Keine Pflanze gefunden. Fehlt eine? Sag mir Bescheid, dann ergänze ich den Katalog.</p>`;
+}
+
+/* Mondkalender */
+function vMond(){
+  const m0=UI.calM, y=m0.getFullYear(), mo=m0.getMonth();
+  const first=new Date(y,mo,1), lead=(first.getDay()+6)%7, days=new Date(y,mo+1,0).getDate();
+  let cells=["Mo","Di","Mi","Do","Fr","Sa","So"].map(w=>`<div class="wd">${w}</div>`).join("");
+  for(let i=0;i<lead;i++) cells+=`<div class="cd out"></div>`;
+  for(let d=1;d<=days;d++){const dt=new Date(y,mo,d),m=moon(dt),k=dkey(dt);
+    cells+=`<button class="cd ${k===dkey(TODAY)?"today":""} ${k===UI.calSel?"sel":""}" data-cal="${k}" style="--el:var(${EL[m.el].v})" aria-label="${esc(fLong(dt))}, ${esc(m.phase)}, ${EL[m.el].n}"><span class="ar">${m.asc?"↑":"↓"}</span><b class="num">${d}</b>${moonSVG(m,18)}<span class="el"></span></button>`}
+  const sd=pkey(UI.calSel), sm=moon(sd), se=EL[sm.el];
+  const actions=Object.entries({schnitt:"Rückschnitt",duengen:"Düngen",pflanzen:"Pflanzen & Umsetzen",ernte:"Ernte",aussaat:"Säen",schutz:"Winterschutz"}).map(([t,l])=>{const {s}=scoreDay(t,sm,sm.el);const q=quality(t,s);return `<span class="q ${q[0]}">${l}: ${q[1].replace(" Tag","")}</span>`}).join("");
+  return `<section class="block" style="margin-top:6px">
+    <div class="block-head"><h2>Mondkalender</h2><span class="spacer"></span>
+      <div class="row"><button class="iconbtn" data-calm="-1" aria-label="Voriger Monat"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <strong style="min-width:130px;text-align:center">${fmt(first,{month:"long",year:"numeric"})}</strong>
+      <button class="iconbtn" data-calm="1" aria-label="Nächster Monat"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+    <div class="cal">${cells}</div>
+    <div class="legend">${Object.values(EL).map(e=>`<span style="--el:var(${e.v})"><i></i>${e.n}</span>`).join("")}<span>↑ aufsteigend</span><span>↓ absteigend</span></div>
+    <div class="daycard"><div>${moonSVG(sm,64)}</div><div style="min-width:0"><div class="eyebrow">${esc(fLong(sd))}</div><h3 style="font-size:21px;margin:2px 0">${esc(sm.phase)} · <span style="color:var(${se.v})">${se.n}</span></h3><div class="muted" style="font-size:14px">Mond in ${esc(sm.sign)}, ${sm.asc?"aufsteigend":"absteigend"}, ${Math.round(sm.illum*100)} % beleuchtet</div><div class="tmeta">${actions}</div></div></div>
+    <div class="explain">
+      <div class="tip"><h3>Zu- und abnehmend</h3><p>Abnehmender Mond gilt als Zeit für Schnitt, Düngung und Pflege, weil die Säfte nach unten ziehen. Zunehmender Mond ist Säzeit.</p></div>
+      <div class="tip"><h3>Auf- und absteigend</h3><p>Der absteigende Mond ist die traditionelle Pflanzzeit: Wurzeln wachsen gut an. Aufsteigend ist Erntezeit für Obst und Kräuter.</p></div>
+      <div class="tip"><h3>Element-Tage</h3><p>Je nach Tierkreiszeichen ist Blüten-, Blatt-, Frucht- oder Wurzeltag. Arbeiten an einer Pflanze passen am besten zu ihrem Teil: Rosen an Blütentagen, Hecken an Blatttagen, Zwiebeln an Wurzeltagen.</p></div>
+    </div>
+    <div class="note"><strong>Zur Einordnung.</strong> Ein Einfluss des Mondes auf das Pflanzenwachstum ist wissenschaftlich nicht belegt. Entscheidend sind Jahreszeit, Wetter und Boden. Deshalb setzt der Plan immer zuerst das gärtnerisch richtige Zeitfenster und wählt erst darin den günstigsten Mondtag. Die Mondposition wird näherungsweise berechnet (siderischer Tierkreis), an Zeichenwechseln kann sie um einen Tag von gedruckten Kalendern abweichen.</div>
+  </section>`;
+}
+
+/* Team */
+function vTeam(){
+  const admin=me.role==="admin";
+  const rows=S.members.map(m=>{const self=m.email===me.email;return `<div class="member">
+    <span class="ini lg">${esc(m.email.slice(0,1).toUpperCase())}</span>
+    <div style="flex:1;min-width:0"><strong style="word-break:break-all">${esc(m.email)}</strong>${self?' <span class="muted">(du)</span>':""}
+      <div class="muted" style="font-size:13px">${m.seen?"zuletzt da "+esc(fShort(pkey(m.seen))):"noch nicht angemeldet"}</div></div>
+    ${admin&&!self?`<select class="memrole" data-mem="${esc(m.email)}" aria-label="Rolle von ${esc(m.email)}" style="width:auto">${Object.entries(ROLES).map(([k,r])=>`<option value="${k}" ${k===m.role?"selected":""}>${r.n}</option>`).join("")}</select>
+      <button class="iconbtn" data-delmem="${esc(m.email)}" aria-label="Entfernen"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>`
+      :`<span class="chip">${esc(ROLES[m.role]?.n||m.role)}</span>`}
+  </div>`}).join("");
+  return `<section class="block" style="margin-top:6px">
+    <div class="block-head"><h2>Team & Rechte</h2><span class="spacer"></span><button class="btn" data-logout>Abmelden</button></div>
+    <p class="muted" style="margin:0 0 14px">Angemeldet als <strong>${esc(me.email)}</strong></p>
+    <div class="roles">${Object.entries(ROLES).map(([k,r])=>`<div class="role ${k===me.role?"mine":""}"><div class="eyebrow">${k===me.role?"Deine Rolle":"Rolle"}</div><h3>${r.n}</h3><p style="margin:0;font-size:14px" class="muted">${r.d}</p></div>`).join("")}</div>
+    <div class="block" style="margin-top:22px"><div class="block-head"><h2 style="font-size:20px">Mitglieder</h2></div><div class="members">${rows}</div></div>
+    ${admin?`<div class="block" style="margin-top:22px"><div class="block-head"><h2 style="font-size:20px">Person freischalten</h2></div>
+      <form class="form" id="mform" style="max-width:520px">
+        <div class="two"><div class="field"><label for="memail">E-Mail</label><input id="memail" type="email" required placeholder="name@beispiel.li"></div>
+        <div class="field"><label for="mrole">Rolle</label><select id="mrole">${Object.entries(ROLES).map(([k,r])=>`<option value="${k}" ${k==="admin"?"selected":""}>${r.n}</option>`).join("")}</select></div></div>
+        <div class="hint muted" style="font-size:13px">Danach kann sich die Person mit dieser Adresse anmelden. Mit dem eingebauten Supabase-Mailversand muss sie zusätzlich im Supabase-Team sein (siehe Anleitung).</div>
+        <div class="actions"><button class="btn primary" type="submit">Freischalten</button></div>
+      </form></div>`:""}
+  </section>`;
+}
+
+/* ---------- Sheets ---------- */
+function sheet(html){
+  $("#sheetroot").innerHTML=`<div class="overlay" data-close><div class="sheet" role="dialog" aria-modal="true">${html}</div></div>`;
+  document.body.style.overflow="hidden";
+  const f=$("#sheetroot input,#sheetroot select,#sheetroot textarea"); if(f&&window.innerWidth>700) f.focus();
+}
+function closeSheet(){$("#sheetroot").innerHTML="";document.body.style.overflow=""}
+const closeBtn=`<span class="spacer"></span><button class="iconbtn" data-x aria-label="Schließen"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>`;
+
+function zoneForm(z){
+  const isNew=!z; z=z||{name:"",light:"Sonne",kind:"Beet",color:ZCOLORS[S.zones.length%5],note:""};
+  sheet(`<div class="sheet-h"><div><div class="eyebrow">${isNew?"Neue Zone":"Zone bearbeiten"}</div><h2>${isNew?"Ort im Garten":esc(z.name)}</h2></div>${closeBtn}</div>
+  <form class="form" id="zform">
+    <div class="field"><label for="zname">Name</label><input id="zname" type="text" required maxlength="60" value="${esc(z.name)}" placeholder="z. B. Rosenbeet Süd"></div>
+    <div class="two"><div class="field"><label for="zkind">Art</label><select id="zkind">${["Beet","Rabatte","Kübel & Töpfe","Hecke","Rasen","Gehölz","Kräutergarten","Obstgarten","Balkon & Terrasse","Hang & Böschung"].map(o=>`<option ${o===z.kind?"selected":""}>${o}</option>`).join("")}</select></div>
+    <div class="field"><label for="zlight">Lage</label><select id="zlight">${["Sonne","Halbschatten","Schatten"].map(o=>`<option ${o===z.light?"selected":""}>${o}</option>`).join("")}</select></div></div>
+    <div class="field"><label>Farbe</label><div class="swatches">${ZCOLORS.map((c,i)=>`<label style="--sw:${c}"><input type="radio" name="zcol" id="zcol${i}" value="${c}" ${c===z.color?"checked":""}><span></span></label>`).join("")}</div></div>
+    <div class="field"><label for="znote">Notiz</label><textarea id="znote" maxlength="400" placeholder="Boden, Besonderheiten, z. B. lehmig, windgeschützt">${esc(z.note||"")}</textarea></div>
+    <div class="actions"><button class="btn primary" type="submit">${isNew?"Zone anlegen":"Speichern"}</button>
+    ${!isNew?`<span class="spacer"></span><button class="btn danger" type="button" data-delzone="${esc(z.id)}">Zone löschen</button>`:""}</div>
+  </form>`);
+  $("#zform").addEventListener("submit",async e=>{e.preventDefault();
+    const data={name:$("#zname").value.trim(),kind:$("#zkind").value,light:$("#zlight").value,color:(document.querySelector('input[name=zcol]:checked')||{}).value||ZCOLORS[0],note:$("#znote").value.trim()};
+    if(!data.name) return;
+    if(isNew){const id=uid("z");data.order=Date.now();data.by=me.id||null;if(await guard(api.set("zones",id,data),"Zone angelegt")){closeSheet();UI.tab="zonen";UI.zone=id;render()}}
+    else{if(await guard(api.update("zones",z.id,data),"Gespeichert")) closeSheet()}
+  });
+}
+function pickPlant(zoneId){
+  sheet(`<div class="sheet-h"><div><div class="eyebrow">Pflanze hinzufügen</div><h2>Aus dem Katalog wählen</h2></div>${closeBtn}</div>
+    <input type="search" id="pickq" placeholder="Name oder botanisch suchen" aria-label="Suchen">
+    <div id="picklist" style="margin-top:10px"></div>`);
+  const draw=()=>{const q=$("#pickq").value;const list=catFilter(q,"Alle");
+    $("#picklist").innerHTML=CATS.map(cat=>{const xs=list.filter(c=>c.c===cat);if(!xs.length)return"";return `<div class="eyebrow" style="margin:12px 0 4px">${esc(cat)}</div>${xs.map(c=>`<button class="pickrow" data-pick="${c.id}" data-pz="${esc(zoneId)}"><span class="g">${glyph(c.c,28)}</span><span><strong>${esc(c.n)}</strong><br><span class="muted" style="font-size:13px;font-style:italic">${esc(c.b)}</span></span></button>`).join("")}`}).join("")||`<p class="muted">Nichts gefunden.</p>`};
+  $("#pickq").addEventListener("input",draw); draw();
+}
+function plantingForm(opts){
+  const p=opts.p, c=CAT[p?p.cat:opts.cat], isNew=!p;
+  if(!S.zones.length){toast("Lege zuerst eine Zone an.");return}
+  const zid=p?p.zoneId:(opts.zoneId||S.zones[0].id);
+  sheet(`<div class="sheet-h"><div class="g" style="width:52px;height:52px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent);flex:none">${glyph(c.c,36)}</div><div style="min-width:0"><div class="eyebrow">${isNew?"In Zone setzen":"Pflanze bearbeiten"}</div><h2>${esc(c.n)}</h2><div class="muted" style="font-style:italic;font-size:14px">${esc(c.b)}</div></div>${closeBtn}</div>
+  <form class="form" id="pform">
+    <div class="two"><div class="field"><label for="pzone">Zone</label><select id="pzone">${S.zones.map(z=>`<option value="${esc(z.id)}" ${z.id===zid?"selected":""}>${esc(z.name)}</option>`).join("")}</select></div>
+    <div class="field"><label for="pcount">Anzahl</label><input id="pcount" type="number" min="1" max="999" value="${p?p.count||1:1}"></div></div>
+    <div class="field"><label for="pstatus">Status</label><select id="pstatus"><option value="gepflanzt" ${!p||p.status!=="geplant"?"selected":""}>Steht schon im Garten</option><option value="geplant" ${p&&p.status==="geplant"?"selected":""}>Geplant, noch nicht gepflanzt</option></select><div class="hint">Bei „geplant“ zeigt der Plan nur das Pflanzfenster.</div></div>
+    <div class="field"><label for="pnote">Sorte oder Notiz</label><input id="pnote" type="text" maxlength="120" value="${esc(p?p.note||"":"")}" placeholder="z. B. 'Gloria Dei', links vom Eingang"></div>
+    <div class="actions"><button class="btn primary" type="submit">${isNew?"Hinzufügen":"Speichern"}</button>
+    ${!isNew?`<span class="spacer"></span><button class="btn danger" type="button" data-delp="${esc(p.id)}">Entfernen</button>`:""}</div>
+  </form>`);
+  $("#pform").addEventListener("submit",async e=>{e.preventDefault();
+    const data={zoneId:$("#pzone").value,count:Math.max(1,Math.min(999,parseInt($("#pcount").value,10)||1)),status:$("#pstatus").value,note:$("#pnote").value.trim()};
+    if(isNew){data.cat=c.id;data.added=dkey(TODAY);data.by=me.id||null;if(await guard(api.set("plantings",uid("p"),data),`${c.n} hinzugefügt`)) closeSheet()}
+    else{if(await guard(api.update("plantings",p.id,data),"Gespeichert")) closeSheet()}
+  });
+}
+function info(cid){
+  const c=CAT[cid];
+  const rows=c.t.map(t=>{const [type,f,to]=t;const [fm]=f.split("-").map(Number),[tm]=to.split("-").map(Number);const tt=TT[type];
+    let cells="";for(let m=1;m<=12;m++){const on=fm<=tm?(m>=fm&&m<=tm):(m>=fm||m<=tm);cells+=`<div style="padding:0 1px">${on?`<div class="bar" style="--c:var(${tt.c})"></div>`:""}</div>`}
+    return `<div class="lab" style="color:var(${tt.c})">${tt.l}</div>${cells}`}).join("");
+  const mh=MONTHS.map((m,i)=>`<div class="mh ${i===TODAY.getMonth()?"cur":""}">${m.slice(0,1)}</div>`).join("");
+  sheet(`<div class="sheet-h"><div class="g" style="width:56px;height:56px;border-radius:14px;background:var(--accent-soft);display:grid;place-items:center;color:var(--accent);flex:none">${glyph(c.c,40)}</div><div style="min-width:0"><div class="eyebrow">${esc(c.c)}</div><h2>${esc(c.n)}</h2><div class="muted" style="font-style:italic">${esc(c.b)}</div></div>${closeBtn}</div>
+  <div class="steckbrief">
+    <div class="chips" style="margin:0 0 12px"><span class="chip">${esc(c.l)}</span><span class="chip">${water(c.w)}</span><span class="chip">${esc(c.h)}</span><span class="chip"><span class="dot" style="--c:var(${EL[c.e].v})"></span>${EL[c.e].s}-Pflanze</span></div>
+    <p>${esc(c.d)}</p>
+    <div class="eyebrow" style="margin-top:14px">Jahresplan</div>
+    <div class="yearplan"><div class="yp"><div></div>${mh}${rows}</div></div>
+    <div class="eyebrow" style="margin-top:16px">Was wann zu tun ist</div>
+    <div class="tlist">${c.t.map(([type,f,to,txt])=>{const [fm,fd]=f.split("-").map(Number),[tm,td]=to.split("-").map(Number);return `<div style="--c:var(${TT[type].c})"><b>${TT[type].l} · ${fd}. ${MONTHS[fm-1]} – ${td}. ${MONTHS[tm-1]}</b>${esc(txt)}</div>`}).join("")}</div>
+    ${me.canPlants?`<div class="actions" style="margin-top:16px"><button class="btn primary" data-plantcat="${c.id}">${plus()}In eine Zone setzen</button></div>`:""}
+  </div>`);
+}
+
+/* ---------- Ereignisse ---------- */
+let delArm=null;
+document.addEventListener("click",async e=>{
+  const b=e.target.closest("button,[data-close]"); if(!b) return;
+  const d=b.dataset;
+  if(d.close!==undefined&&e.target===b){closeSheet();return}
+  if(d.x!==undefined){closeSheet();return}
+  if(d.tab){go(d.tab);return}
+  if(d.go){go(d.go);return}
+  if(d.range){UI.range=d.range;LS.set("range",d.range);render();return}
+  if(d.zf){UI.zoneF=d.zf;render();return}
+  if(d.tf){UI.typeF=d.tf;render();return}
+  if(d.toggle){UI.open.has(d.toggle)?UI.open.delete(d.toggle):UI.open.add(d.toggle);render();return}
+  if(d.done||d.skip){const k=d.done||d.skip;const [pid,tid,y]=k.split("~");await guard(api.set("done",k,{pid,tid,y:Number(y),date:dkey(TODAY),skipped:!!d.skip,by:me.id||null}),d.done?"Erledigt":"Für dieses Jahr ausgelassen");return}
+  if(d.undo){await guard(api.del("done",d.undo),"Zurückgesetzt");return}
+  if(d.zone){UI.zone=d.zone;render();window.scrollTo({top:0});return}
+  if(d.back!==undefined){UI.zone=null;render();return}
+  if(d.newzone!==undefined){zoneForm();return}
+  if(d.editzone){zoneForm(S.zones.find(z=>z.id===d.editzone));return}
+  if(d.addplant){pickPlant(d.addplant);return}
+  if(d.pick){plantingForm({cat:d.pick,zoneId:d.pz});return}
+  if(d.plantcat){plantingForm({cat:d.plantcat,zoneId:UI.zone});return}
+  if(d.editp){plantingForm({p:S.plantings.find(p=>p.id===d.editp)});return}
+  if(d.info){info(d.info);return}
+  if(d.cat){UI.catC=d.cat;document.querySelectorAll("[data-cat]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.cat===d.cat));renderCatList();return}
+  if(d.calm){UI.calM=new Date(UI.calM.getFullYear(),UI.calM.getMonth()+Number(d.calm),1);render();return}
+  if(d.cal){UI.calSel=d.cal;render();return}
+  if(d.delzone){
+    if(delArm!==b){delArm=b;b.classList.add("sure");const n=S.plantings.filter(p=>p.zoneId===d.delzone).length;b.textContent=n?`Zone und ${n} Pflanzen löschen?`:"Wirklich löschen?";return}
+    if(await guard(api.del("zones",d.delzone),"Zone gelöscht")){closeSheet();UI.zone=null;render()}
+    return}
+  if(d.delp){
+    if(delArm!==b){delArm=b;b.classList.add("sure");b.textContent="Wirklich entfernen?";return}
+    if(await guard(api.del("plantings",d.delp),"Pflanze entfernt")) closeSheet();
+    return}
+});
+document.addEventListener("input",e=>{
+  if(e.target.id==="catq"){UI.catQ=e.target.value;renderCatList()}
+});
+document.addEventListener("change",e=>{
+  if(e.target.id==="rfrom"){UI.from=e.target.value||UI.from;render()}
+  if(e.target.id==="rto"){UI.to=e.target.value||UI.to;render()}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&$("#sheetroot").innerHTML)closeSheet()});
+let tt=null;
+function toast(msg){const r=$("#toastroot");r.innerHTML=`<div class="toast" role="status">${esc(msg)}</div>`;clearTimeout(tt);tt=setTimeout(()=>r.innerHTML="",2400)}
+
+/* ---------- Team-Aktionen ---------- */
+document.addEventListener("submit",async e=>{
+  if(e.target.id==="mform"){e.preventDefault();
+    const email=$("#memail").value.trim().toLowerCase(), role=$("#mrole").value;
+    if(!email) return;
+    if(await guard(api.set("members",email,{role}),"Freigeschaltet")) render();
+  }
+});
+document.addEventListener("change",async e=>{
+  if(e.target.classList.contains("memrole")) await guard(api.update("members",e.target.dataset.mem,{role:e.target.value}),"Rolle geändert");
+});
+document.addEventListener("click",async e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  if(b.dataset.logout!==undefined){await sb.auth.signOut();location.reload()}
+  if(b.dataset.delmem){
+    if(delArm!==b){delArm=b;b.classList.add("sure");b.style.background="var(--danger)";b.style.color="var(--surface)";return}
+    await guard(api.del("members",b.dataset.delmem),"Entfernt");
+  }
+  if(b.id==="mechip"){go("team")}
+});
+
+/* ---------- Anmeldung ---------- */
+function gate(html){
+  document.body.classList.add("gated");
+  $("#mechip").hidden=true;
+  $("#view").innerHTML=`<section class="gate">${html}</section>`;
+}
+function gateHero(){const m=moon(TODAY);return `<div class="gate-moon">${moonSVG(m,84)}</div>`}
+function showSetup(){
+  gate(`${gateHero()}<h2>Fast fertig</h2><p class="muted">In der Datei <code>config.js</code> fehlen noch die Supabase-Adresse und der Schlüssel. Die Anleitung in <code>README.md</code> zeigt, wo du beides findest.</p>`);
+}
+function showLogin(msg){
+  gate(`${gateHero()}<div class="eyebrow">${esc(fLong(TODAY))}</div><h2>Willkommen im Garten</h2>
+  <p class="muted">Gib deine E-Mail-Adresse ein. Du bekommst einen Login-Link und einen 6-stelligen Code.</p>
+  <form class="form" id="lform"><div class="field"><label for="lemail">E-Mail</label><input id="lemail" type="email" required autocomplete="email" value="${esc(LS.get("email",""))}"></div>
+  <button class="btn primary" type="submit">Login-Link senden</button></form>
+  ${msg?`<p class="gate-msg">${esc(msg)}</p>`:""}`);
+  $("#lform").addEventListener("submit",async e=>{e.preventDefault();
+    const email=$("#lemail").value.trim().toLowerCase(); if(!email) return; LS.set("email",email);
+    const btn=e.target.querySelector("button"); btn.disabled=true; btn.textContent="Wird gesendet …";
+    const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin+location.pathname,shouldCreateUser:true}});
+    if(error){showLogin(/rate|seconds/i.test(error.message)?"Zu viele Versuche. Warte ein paar Minuten und versuche es dann nochmal.":/not authorized|authorized/i.test(error.message)?"Diese Adresse darf noch keine Mails von Supabase bekommen. Lade sie im Supabase-Team ein oder richte einen eigenen Mailversand ein (siehe Anleitung).":"Senden hat nicht geklappt: "+error.message);return}
+    showCode(email);
+  });
+}
+function showCode(email){
+  gate(`${gateHero()}<h2>Schau in dein Postfach</h2>
+  <p class="muted">Wir haben eine Mail an <strong>${esc(email)}</strong> geschickt. Tippe auf den Link oder gib hier den Code aus der Mail ein. Der Code ist praktisch, wenn du die App vom Home-Bildschirm aus nutzt.</p>
+  <form class="form" id="cform"><div class="field"><label for="lcode">Code</label><input id="lcode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456"></div>
+  <div class="actions"><button class="btn primary" type="submit">Anmelden</button><button class="btn" type="button" id="lback">Andere Adresse</button></div></form>`);
+  $("#lback").addEventListener("click",()=>showLogin());
+  $("#cform").addEventListener("submit",async e=>{e.preventDefault();
+    const token=$("#lcode").value.replace(/\s/g,""); if(!token) return;
+    const {data,error}=await sb.auth.verifyOtp({email,token,type:"email"});
+    if(error){toast("Code stimmt nicht oder ist abgelaufen.");return}
+    if(data.session) boot(data.session);
+  });
+}
+function showNoAccess(){
+  gate(`${gateHero()}<h2>Noch nicht freigeschaltet</h2><p class="muted">Du bist als <strong>${esc(me.email)}</strong> angemeldet, aber diese Adresse steht noch nicht in der Mitgliederliste. Bitte den Verwalter, dich unter „Team“ freizuschalten.</p><button class="btn" data-logout>Abmelden</button>`);
+}
+let channel=null;
+async function boot(session){
+  if(booted) return;
+  me.email=(session.user.email||"").toLowerCase(); me.id=session.user.id;
+  try{if(/access_token|error_description/.test(location.hash)) history.replaceState(null,"",location.pathname)}catch(e){}
+  const {data:mrow}=await sb.from("members").select("*").eq("email",me.email).maybeSingle();
+  if(!mrow){showNoAccess();return}
+  me.role=mrow.role; me.canZones=me.role==="admin"; me.canPlants=me.role!=="read";
+  booted=true; document.body.classList.remove("gated");
+  render();
+  await loadAll();
+  sb.rpc("touch_me").then(()=>{},()=>{});
+  channel=sb.channel("garten");
+  for(const t of ["zones","plantings","done","members"]) channel.on("postgres_changes",{event:"*",schema:"public",table:t},()=>load(t));
+  channel.subscribe();
+  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible") loadAll()});
+}
+(async()=>{
+  const t=LS.get("tab","plan"); if(TABS.some(x=>x[0]===t)) UI.tab=t;
+  const cfg=window.GARTENMOND_CONFIG||{};
+  if(!window.supabase){gate(`${gateHero()}<h2>Keine Verbindung</h2><p class="muted">Die App konnte nicht laden. Prüfe deine Internetverbindung und lade die Seite neu.</p>`);return}
+  if(!cfg.url||!cfg.key||/DEIN/.test(cfg.url+cfg.key)){showSetup();return}
+  sb=supabase.createClient(cfg.url,cfg.key,{auth:{flowType:"implicit",persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  sb.auth.onAuthStateChange((ev,session)=>{if(session&&!booted&&(ev==="SIGNED_IN"||ev==="INITIAL_SESSION")) boot(session)});
+  const {data}=await sb.auth.getSession();
+  if(data.session) boot(data.session); else showLogin();
+})();
+})();
+</script>
+</body>
+</html>
